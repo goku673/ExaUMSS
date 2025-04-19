@@ -3,16 +3,23 @@ import { View, StyleSheet, Image, Text } from "react-native";
 
 interface CardProps {
   title: string;
-  description: string;
+  description?: string;
   image: string;
 }
 
 const Card: React.FC<CardProps> = ({ title, description, image }) => {
   return (
     <View style={styles.container}>
-      <Image source={{ uri: image }} style={styles.image} />
+      <Image 
+        source={{ uri: image }} 
+        style={styles.image} 
+        resizeMode="contain" // Añadido para mejor visualización de imágenes
+        accessibilityLabel={title} // Mejor accesibilidad
+      />
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
+      {description && ( // Solo renderiza la descripción si existe
+        <Text style={styles.description}>{description}</Text>
+      )}
     </View>
   );
 };

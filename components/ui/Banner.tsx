@@ -2,6 +2,7 @@ import React from "react";
 import { Image, StyleSheet, View, Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
+
 const Banner: React.FC = () => (
     <View style={styles.container}>
       <Image
@@ -13,15 +14,12 @@ const Banner: React.FC = () => (
   );
 
 
-
-export default Banner;
-
 const styles = StyleSheet.create({
     container: {
         width: "100%", 
         height: width * 0.5, 
         marginBottom: 16,
-        backgroundColor: "#F5F5DC",
+        backgroundColor: "transparent",
     },
     image: {
       width: "100%",
@@ -29,3 +27,5 @@ const styles = StyleSheet.create({
       borderRadius: 8,
     },
   });
+
+  export default Banner;
