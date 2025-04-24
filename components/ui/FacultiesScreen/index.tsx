@@ -3,38 +3,44 @@ import { StyleSheet, ScrollView, ImageBackground, TouchableOpacity, Text, View }
 import { Link } from "expo-router";
 import Header from "../Header";
 import Title from "../Title";
+import images, { type ImageKey } from "../../../assets/images";
 
-const FacultiesScreen = () => {
-  const FACULTIES = [
+const Faculties = () => {
+  const FACULTIES: Array<{
+    id: string;
+    title: string;
+    description: string;
+    imageKey: ImageKey;
+  }> = [
     {
       id: '1',
-      title: "Faculty of Medicine",
+      title: "Facultad de Medicina",
       description: "Medical sciences and healthcare programs",
-      image: require("../../../assets/images/facMedicine.png")
+      imageKey: "facMedicine"
     },
     {
       id: '2',
-      title: "Faculty of Law",
+      title: "Facultad de Derecho",
       description: "Legal studies and jurisprudence",
-      image: require("../../../assets/images/facLaw.png")
+      imageKey: "facLaw"
     },
     {
       id: '3',
-      title: "Faculty of Economics", 
+      title: "Facultad de Economia", 
       description: "Money money money",
-      image: require("../../../assets/images/facEconomy.png")
+      imageKey: "facEconomy"
     },
     {
       id: '4',
-      title: "Faculty of Engineering",
+      title: "Facultad de Ciencias y Tecnologia",
       description: "Engineering and technical",
-      image: require("../../../assets/images/facTecno.png")
+      imageKey: "facTecno"
     }
   ];
 
   return (
     <ImageBackground 
-      source={require("../../../assets/images/fondStart.png")}
+      source={images.fondStart}
       style={styles.backgroundContainer}
       resizeMode="cover"
     >
@@ -48,23 +54,25 @@ const FacultiesScreen = () => {
             <Link 
               key={faculty.id}
               href={{
-                pathname: "/faculty-details",
+                pathname: "/facultyContent",
                 params: { 
                   title: faculty.title,
-                  image: faculty.image
+                  imageKey: faculty.imageKey
                 }
               }}
               asChild
             >
               <TouchableOpacity style={styles.facultyCard}>
                 <ImageBackground
-                  source={faculty.image}
+                  source={images[faculty.imageKey]}
                   style={styles.facultyImage}
                   resizeMode="cover"
                   imageStyle={styles.imageStyle}
                 >
                   <View style={styles.textOverlay}>
-                    <Text style={styles.facultyName}>{faculty.title}</Text>
+                    <Text style={styles.facultyName}>
+                      {faculty.title.replace("Faculty of ", "")}
+                    </Text>
                     <Text style={styles.facultyDescription}>{faculty.description}</Text>
                   </View>
                 </ImageBackground>
@@ -77,6 +85,7 @@ const FacultiesScreen = () => {
   );
 };
 
+// Los estilos se mantienen igual que en tu versión
 const styles = StyleSheet.create({
   backgroundContainer: {
     flex: 1,
@@ -143,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FacultiesScreen;
+export default Faculties;

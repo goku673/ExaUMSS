@@ -9,19 +9,22 @@ interface IconButtonProps {
   style?: ViewStyle;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ icon, size = 24, onPress, style }) => (
-  <PaperIconButton 
-   icon={icon} 
-   size={size} 
-   onPress={onPress} 
-   style={[styles.iconButton, style]} 
-   />
+const IconButton = React.forwardRef<any, IconButtonProps>(
+  ({ icon, size = 24, onPress, style }, ref) => (
+    <PaperIconButton
+      ref={ref}
+      icon={icon}
+      size={size}
+      onPress={onPress}
+      style={[styles.iconButton, style]}
+    />
+  )
 );
-
-export default IconButton;
 
 const styles = StyleSheet.create({
   iconButton: {
     margin: 0,
   },
 });
+
+export default IconButton;
