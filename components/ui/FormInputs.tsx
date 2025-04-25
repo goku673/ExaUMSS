@@ -7,6 +7,7 @@ interface InputField {
   value: string;
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
+  icon: string;
 }
 
 interface FormInputsProps {
@@ -25,6 +26,7 @@ const FormInputs: React.FC<FormInputsProps> = ({ inputs }) => {
           secureTextEntry={input.secureTextEntry}
           mode="outlined"
           style={styles.input}
+          right={<TextInput.Icon icon={input.icon} />}
         />
       ))}
     </View>
@@ -33,7 +35,7 @@ const FormInputs: React.FC<FormInputsProps> = ({ inputs }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    padding: 16,
   },
   input: {
     marginBottom: 16,

@@ -1,19 +1,29 @@
-import { Stack } from 'expo-router';
-import React from 'react';
-
+import { Stack } from "expo-router";
+import React from "react";
+import { Provider as PaperProvider } from "react-native-paper";
 export default function RootLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ title: 'Authentication' }} />
-      <Stack.Screen name="(auth)/login" options={{ title: 'Login' }} />
-      <Stack.Screen name="(auth)/register" options={{ title: 'Register' }} />
-      <Stack.Screen name="(auth)/forgot-password" options={{ title: 'Forgot Password' }} />
-      <Stack.Screen name="(auth)/reset-password" options={{ title: 'Reset Password' }} /> */}
-      
-      <Stack.Screen name="(auth)/login" options={{ title: 'Login' }} /> 
-      <Stack.Screen name="(auth)/register" options={{ title: 'Register' }} />
-      <Stack.Screen name="landing" options={{ title: 'landing' }} />
-    </Stack>
+    <PaperProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          animation: "fade",
+          gestureEnabled: false,
+        }}
+      >
+        <Stack.Screen 
+          name="(auth)"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen 
+          name="(tabs)"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack>
+    </PaperProvider>
   );
 }
