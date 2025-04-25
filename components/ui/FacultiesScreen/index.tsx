@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 import Header from "../Header";
 import Title from "../Title";
 
+
 const FacultiesScreen = () => {
   const FACULTIES = [
     {

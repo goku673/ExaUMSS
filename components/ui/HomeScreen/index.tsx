@@ -54,19 +54,21 @@ const HomeScreen: React.FC = () => {
           </TouchableOpacity>
 
           {/* Opción de Guide con imagen de fondo */}
-          <TouchableOpacity style={styles.optionContainer}>
-            <ImageBackground 
-              source={require("../../../assets/images/guide.png")}
-              style={styles.optionBackground}
-              resizeMode="cover"
-              imageStyle={styles.optionImageStyle}
-            >
-              <View style={styles.optionTextContainer}>
-                <Text style={styles.optionTitle}>Guide</Text>
-                <Text style={styles.optionSubtitle}>Read the user guide</Text>
-              </View>
-            </ImageBackground>
-          </TouchableOpacity>
+          <Link href="/guides" asChild>
+              <TouchableOpacity style={styles.optionContainer}>
+                <ImageBackground 
+                  source={require("../../../assets/images/guide.png")}
+                  style={styles.optionBackground}
+                  resizeMode="cover"
+                  imageStyle={styles.optionImageStyle}
+                >
+                  <View style={styles.optionTextContainer}>
+                    <Text style={styles.optionTitle}>Guide</Text>
+                    <Text style={styles.optionSubtitle}>Read the user guide</Text>
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
+            </Link>
         </View>
       </ScrollView>
     </ImageBackground>
