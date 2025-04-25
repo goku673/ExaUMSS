@@ -18,7 +18,7 @@ const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState("")
 
   const handleLogin = () => {
-    router.push("/landing");
+    router.push("/(tabs)/landing");
     
   }
 
@@ -43,12 +43,14 @@ const LoginScreen: React.FC = () => {
       value: username,
       onChangeText: setUsername,
       secureTextEntry: false,
+      icon: "account",
     },
     {
       label: "Password",
       value: password,
       onChangeText: setPassword,
       secureTextEntry: true,
+      icon: "lock",
     },
   ]
 
@@ -56,22 +58,22 @@ const LoginScreen: React.FC = () => {
     <Form>
   
       <FormHeader>
-        <Text style={styles.headerTitle}>Welcome back</Text>
+        <Text style={styles.headerTitle}>Bienbenido a ExaUMSS</Text>
       </FormHeader>
 
       <FormContent>
         <FormInputs inputs={inputFields} />
 
         <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.forgotPassword}>Forgot password?</Text>
+          <Text style={styles.forgotPassword}>Olvidaste tu correo?</Text>
         </TouchableOpacity>
 
-        <Button label="Log in" onPress={handleLogin} style={styles.loginButton} />
+        <Button label="Ingresar" onPress={handleLogin} style={styles.loginButton} />
       </FormContent>
 
       <FormFooter>
         <TouchableOpacity onPress={handleCreateAccount} >
-          <Text style={styles.createAccount}>Don't have an account?</Text>
+          <Text style={styles.createAccount}>No tienes cuenta?</Text>
         </TouchableOpacity>
       </FormFooter>
     </Form>
@@ -87,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     color: "#000000",
+    alignItems: "center",
   },
   forgotPassword: {
     color: "#666666",
@@ -95,7 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   loginButton: {
-    backgroundColor: "#FF0000",
+    backgroundColor: "#007BFF",
     paddingVertical: 12,
   },
   createAccount: {

@@ -26,22 +26,23 @@ const RegisterScreen: React.FC = () => {
   };
 
   const inputFields = [
-    { label: "First name", value: firstName, onChangeText: setFirstName },
-    { label: "Last name", value: lastName, onChangeText: setLastName },
-    { label: "Email", value: email, onChangeText: setEmail },
+    { label: "First name", value: firstName, onChangeText: setFirstName, icon: "account" },
+    { label: "Last name", value: lastName, onChangeText: setLastName, icon: "account" },
+    { label: "Email", value: email, onChangeText: setEmail, icon: "email" },
     {
       label: "Password",
       value: password,
       onChangeText: setPassword,
       secureTextEntry: secureTextEntry,
+      icon: "lock",
     },
   ];
 
   return (
     <Form>
-        <View style={styles.backButtonContainer}>
-         <IconButton icon="arrow-left" onPress={handleBack} />
-       </View>
+      <View style={styles.backButtonContainer}>
+        <IconButton icon="arrow-left" onPress={handleBack} />
+      </View>
       <FormHeader>
         <Text style={styles.headerTitle}>Sign up</Text>
       </FormHeader>

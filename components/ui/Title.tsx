@@ -1,23 +1,23 @@
 import React from "react";
-import { StyleSheet, TextStyle } from "react-native";
-import Text from "./Text";
+import { Text, StyleSheet, TextStyle } from "react-native";
 
 interface TitleProps {
-  children: React.ReactNode;
-  style?: TextStyle;
+  children: string;
+  style?: TextStyle | TextStyle[];
 }
 
-const Title: React.FC<TitleProps> = ({ children, style }) => (
-  <Text style={StyleSheet.flatten([styles.title, style])}>{children}</Text>
-);
-
-export default Title;
+const Title: React.FC<TitleProps> = ({ children, style }) => {
+  return <Text style={[styles.title, style]}>{children}</Text>; 
+};
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
+    color: "#333",
     textAlign: "center",
-    
+    marginVertical: 16,
   },
 });
+
+export default Title;
