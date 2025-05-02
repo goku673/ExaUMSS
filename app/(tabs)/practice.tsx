@@ -137,6 +137,7 @@ const PracticeScreen: React.FC = () => {
     container: {
       flex: 1,
       padding: 16,
+      paddingTop: 44,
     },
     titleContainer: {
       marginBottom: 24,
@@ -311,9 +312,9 @@ const PracticeScreen: React.FC = () => {
         ) : (
           <>
             <View style={styles.titleContainer}>
-              <Text style={styles.mainTitle}>{t('practice.practice')}</Text>
+              <Text style={styles.mainTitle}>{t('practice.Practice')}</Text>
               <Text style={styles.subtitle}>
-                {t('practice.selectSubjectToStart')}
+                {t('practice.Select a subject to start')}
               </Text>
             </View>
 
@@ -326,7 +327,7 @@ const PracticeScreen: React.FC = () => {
               />
               <TextInput
                 style={styles.searchInput}
-                placeholder={t('practice.searchSubject')}
+                placeholder={t('practice.Search subject')}
                 value={searchText}
                 onChangeText={setSearchText}
                 placeholderTextColor={colors.placeholder}

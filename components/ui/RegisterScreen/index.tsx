@@ -51,15 +51,18 @@ const RegisterScreen: React.FC = () => {
     backButtonContainer: {
       alignItems: "flex-end",
       marginBottom: 10,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      gap: 6,
     }
   });
 
   const inputFields = [
-    { label: t("register.firstName"), value: firstName, onChangeText: setFirstName, icon: "account" },
-    { label: t("register.lastName"), value: lastName, onChangeText: setLastName, icon: "account" },
+    { label: t("register.name"), value: firstName, onChangeText: setFirstName, icon: "account" },
+    { label: t("register.apellido"), value: lastName, onChangeText: setLastName, icon: "account" },
     { label: t("register.email"), value: email, onChangeText: setEmail, icon: "email" },
     {
-      label: t("register.password"),
+      label: t("register.email"),
       value: password,
       onChangeText: setPassword,
       secureTextEntry: secureTextEntry,
@@ -73,7 +76,7 @@ const RegisterScreen: React.FC = () => {
         <IconButton icon="arrow-left" onPress={handleBack} />
       </View>
       <FormHeader>
-        <Text style={dynamicStyles.headerTitle}>{t("register.title")}</Text>
+        <Text style={dynamicStyles.headerTitle}>{t("register.createAccount")}</Text>
       </FormHeader>
       <FormContent>
         <FormInputs inputs={inputFields} />
@@ -85,7 +88,7 @@ const RegisterScreen: React.FC = () => {
           style={dynamicStyles.registerButton} 
         />
         <TouchableOpacity onPress={handleBack}>
-          <Text style={dynamicStyles.backToLogin}>{t("register.haveAccount")}</Text>
+          <Text style={dynamicStyles.backToLogin}>{t("register.alreadyHaveAccount")}</Text>
         </TouchableOpacity>
       </FormFooter>
     </Form>

@@ -17,7 +17,7 @@ const EditProfile: React.FC = () => {
 
   const { theme } = useTheme();
   const colors = getThemeColors(theme);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   // Estilos dinámicos
   const styles = StyleSheet.create({
@@ -25,7 +25,7 @@ const EditProfile: React.FC = () => {
       flex: 1,
       padding: 16,
       backgroundColor: colors.background,
-      paddingTop: 40,
+      paddingTop: 55,
     },
     header: {
       flexDirection: "row",
@@ -61,25 +61,12 @@ const EditProfile: React.FC = () => {
       backgroundColor: colors.primary,
       paddingVertical: 14,
       borderRadius: 8,
-      marginBottom: 12,
-    },
-    languageButton: {
-      paddingVertical: 12,
-      backgroundColor: colors.primaryLight,
-      borderRadius: 8,
-      borderWidth: 1,
-      borderColor: colors.primary,
     },
   });
 
   const handleSave = () => {
     console.log("Profile updated:", { name, gender, age, joinedDate });
     router.back();
-  };
-
-  const toggleLanguage = () => {
-    const nextLang = i18n.language === "es" ? "en" : "es";
-    i18n.changeLanguage(nextLang);
   };
 
   return (
@@ -132,17 +119,11 @@ const EditProfile: React.FC = () => {
         />
       </View>
 
+      {/* Botón de guardar (único botón ahora) */}
       <Button
         label={t("editProfile.saveButton")}
         onPress={handleSave}
         style={styles.saveButton}
-        labelStyle={{ color: colors.buttonText }}
-      />
-
-      <Button
-        label={t("editProfile.toggleLanguage")}
-        onPress={toggleLanguage}
-        style={styles.languageButton}
         labelStyle={{ color: colors.text }}
       />
     </ScrollView>

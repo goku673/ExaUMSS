@@ -88,7 +88,7 @@ const LoginScreen: React.FC = () => {
   return (
     <Form>
       <FormHeader>
-        <Text style={dynamicStyles.headerTitle}>{t("login.welcome")}</Text>
+        <Text style={dynamicStyles.headerTitle}>{t("login.welcomeMessage")}</Text>
       </FormHeader>
 
       <FormContent>
@@ -99,7 +99,7 @@ const LoginScreen: React.FC = () => {
         </TouchableOpacity>
 
         <Button 
-          label={t("login.signIn")} 
+          label={t("login.login")} 
           onPress={handleLogin} 
           style={dynamicStyles.loginButton} 
         />

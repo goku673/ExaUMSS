@@ -69,7 +69,10 @@
       "contraseñaActual": "Contraseña actual",
       "nuevaContraseña": "Nueva contraseña",
       "confirmarContraseña": "Confirmar contraseña",
-      "buttonChangePasword": "Cambiar contraseña"
+      "buttonChangePasword": "Cambiar contraseña",
+      "llenaloscampos": "Completa todos los campos",
+      "contraseñaCorta": "La contraseña es demasiado corta",
+      "cambioContraseña": "Cambio de contraseña exitoso"
     },
     "practice" :{
       "Practice": "Practicas",
@@ -118,17 +121,20 @@
     "login": {
       "login": "Iniciar sesión",
       "email": "Correo electrónico",
+      "username": "Nombre de usuario",
       "password": "Contraseña",
       "forgotPassword": "¿Olvidaste tu contraseña?",
       "loginButton": "Iniciar sesión",
       "registerButton": "Registrarse",
       "welcomeBack": "Bienvenido de nuevo",
       "welcomeMessage": "Estamos felices de verte de nuevo. Inicia sesión para continuar.",
-      "rememberMe": "Recuérdame"
+      "rememberMe": "Recuérdame",
+      "noAccount": "¿No tienes una cuenta?"
     },
     "register": {
       "createAccount": "Crear una cuenta",
       "name": "Nombre",
+      "apellido": "Apellidos",
       "email": "Correo electrónico",
       "confirmPassword": "Confirmar contraseña",
       "signUp": "Registrarse",

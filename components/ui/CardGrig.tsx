@@ -6,9 +6,9 @@ import Card from "./Card";
 import { images } from "@/assets/images";
 import Text from "./Text";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { useTheme } from "@/components/ui/ThemeContext";
 import { getThemeColors } from "@/components/theme";
-import { useTranslation } from "react-i18next";
 
 const CardGrid: React.FC = () => {
   const [visible, setVisible] = useState(false);
@@ -17,127 +17,116 @@ const CardGrid: React.FC = () => {
   const { theme } = useTheme();
   const colors = getThemeColors(theme);
 
-  const styles = StyleSheet.create({
-    container: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "space-between",
-      paddingHorizontal: 16,
-      marginBottom: 24,
-    },
-    facultyGrid: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "space-between",
-      gap: 12,
-    },
+  // Estilos dinámicos que dependen del tema
+  const dynamicStyles = {
     title: {
       fontSize: 20,
-      fontWeight: "bold",
-      color: colors.text,
+      fontWeight: "bold" as const,
+      textAlign: "left" as const,
       marginBottom: 16,
-      textAlign: "left",
+      color: colors.text,
     },
-    modalContent: {
-      padding: 16,
-    }
-  });
+  };
 
-  const handleCardPress = (cardKey: string) => {
-    switch(cardKey) {
-      case 'facultad':
-        setVisible(true);
-        break;
-      case 'reciente':
-        router.push("/(tabs)/guide");
-        break;
-      case 'guia':
-        router.push("/(tabs)/guide");
-        break;
-      default:
-        console.log(`Card clicked: ${cardKey}`);
+  const handleCardPress = (title: string) => {
+    if (title === t("cardGrig.facultad")) {
+      setVisible(true);
+    } else if (title === t("cardGrig.reciente")) {
+      router.push("/(tabs)/guide");
+    } else {
+      console.log(`Card clicked: ${title}`);
     }
   };
 
-  const handleFacultySelect = (faculty: string) => {
-    router.push(`/(faculty)/${faculty.toLowerCase()}`);
+  const hideModal = () => {
     setVisible(false);
   };
 
-  const mainCards = [
-    {
-      key: 'facultad',
-      title: t('cardGrig.facultad'),
-      description: t('cardGrig.facultadContext'),
-      image: images.faculty
-    },
-    {
-      key: 'reciente',
-      title: t('cardGrig.reciente'),
-      description: t('cardGrig.recienteContext'),
-      image: images.recent
-    },
-    {
-      key: 'guia',
-      title: t('cardGrig.guia'),
-      description: t('cardGrig.guiaContext'),
-      image: images.guide
-    }
-  ];
-
-  const facultyCards = [
-    {
-      key: 'medicina',
-      title: t('cardGrig.facMed'),
-      image: images.medicina
-    },
-    {
-      key: 'derecho',
-      title: t('cardGrig.facDer'),
-      image: images.law
-    },
-    {
-      key: 'arquitectura',
-      title: t('cardGrig.facArq'),
-      image: images.faculty
-    }
-  ];
+  const handleFacultySelect = (faculty: string) => {
+    const formattedFaculty = faculty.toLowerCase();
+    router.push(`/(faculty)/${formattedFaculty}`);
+  };
 
   return (
     <>
       <View style={styles.container}>
-        {mainCards.map((card) => (
-          <Card
-            key={card.key}
-            title={card.title}
-            description={card.description}
-            image={card.image}
-            onPress={() => handleCardPress(card.key)}
-          />
-        ))}
+        <Card
+          title={t("cardGrig.facultad")}
+          description={t("cardGrig.facultadContext")}
+          image={images.faculty}
+          onPress={() => handleCardPress(t("cardGrig.facultad"))}
+          titleStyle={{ color: colors.cardText }}
+          descriptionStyle={{ color: colors.cardText }}
+          containerStyle={{ backgroundColor: colors.cardBackground }}
+        />
+        <Card
+          title={t("cardGrig.reciente")}
+          description={t("cardGrig.recienteContext")}
+          image={images.recent}
+          onPress={() => handleCardPress(t("cardGrig.reciente"))}
+          titleStyle={{ color: colors.cardText }}
+          descriptionStyle={{ color: colors.cardText }}
+          containerStyle={{ backgroundColor: colors.cardBackground }}
+        />
+        <Card
+          title={t("cardGrig.guia")}
+          description={t("cardGrig.guiaContext")}
+          image={images.guide}
+          onPress={() => handleCardPress(t("cardGrig.guia"))}
+          titleStyle={{ color: colors.cardText }}
+          descriptionStyle={{ color: colors.cardText }}
+          containerStyle={{ backgroundColor: colors.cardBackground }}
+        />
       </View>
-
-      <Modal 
-        visible={visible} 
-        onDismiss={() => setVisible(false)} 
-        title={t("cardGrig.title")}
-      >
-        <View style={styles.modalContent}>
-          <Text style={styles.title}>{t('cardGrig.title')}</Text>
-          <View style={styles.facultyGrid}>
-            {facultyCards.map((faculty) => (
-              <FacultyCard
-                key={faculty.key}
-                title={faculty.title}
-                image={faculty.image}
-                onPress={() => handleFacultySelect(faculty.key)}
-              />
-            ))}
-          </View>
+      <Modal visible={visible} onDismiss={hideModal}>
+        <Text style={dynamicStyles.title}>{t("cardGrig.title")}</Text>
+        <View style={styles.facultyGrid}>
+          <FacultyCard
+            title={t("cardGrig.facMed")}
+            image={images.medicina}
+            titleStyle={{ color: colors.cardText }}
+            onPress={() => {
+              handleFacultySelect("medicina");
+              hideModal();
+            }}
+          />
+          <FacultyCard
+            title={t("cardGrig.facDer")}
+            image={images.law}
+            titleStyle={{ color: colors.cardText }}
+            onPress={() => {
+              handleFacultySelect("derecho");
+              hideModal();
+            }}
+          />
+          <FacultyCard
+            title={t("cardGrig.facArq")}
+            image={images.faculty}
+            titleStyle={{ color: colors.cardText }}
+            onPress={() => {
+              handleFacultySelect("arquitectura");
+              hideModal();
+            }}
+          />
         </View>
       </Modal>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+  },
+  facultyGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+});
 
 export default CardGrid;

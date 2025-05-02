@@ -23,7 +23,9 @@ const SettingsScreen: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const colors = getThemeColors(theme);
   const { t, i18n } = useTranslation();
-  
+
+  const currentLanguage = i18n.language === "es" ? "Español" : "Inglés";
+
   const dynamicStyles = useMemo(
     () =>
       StyleSheet.create({
@@ -52,17 +54,16 @@ const SettingsScreen: React.FC = () => {
     [colors]
   );
 
-  // Manejar cambio de idioma
   const handleLanguageChange = (selectedLanguage: string) => {
-    if (selectedLanguage === "Español" || selectedLanguage === "Inglés") {
-      i18n.changeLanguage(selectedLanguage === "Español" ? "es" : "en");
+    if (selectedLanguage === t('setting.spanish') || selectedLanguage === t('setting.english')) {
+      const newLocale = selectedLanguage === t('setting.spanish') ? "es" : "en";
+      i18n.changeLanguage(newLocale);
     }
     setLanguageModalVisible(false);
   };
 
-  // Manejar cambio de tema
   const handleThemeChange = (selectedTheme: string) => {
-    if (selectedTheme === "Claro" || selectedTheme === "Oscuro") {
+    if (selectedTheme === t('setting.light') || selectedTheme === t('setting.dark')) {
       setTheme(selectedTheme as AppTheme);
     }
     setThemeModalVisible(false);
@@ -70,49 +71,49 @@ const SettingsScreen: React.FC = () => {
 
   return (
     <View style={dynamicStyles.container}>
-      <Title style={dynamicStyles.title}>{t("setting.settings")}</Title>
+      <Title style={dynamicStyles.title}>{t('setting.settings')}</Title>
 
       {/* Sección de Cuenta */}
-      <Text style={dynamicStyles.sectionTitle}>{t("setting.account")}</Text>
+      <Text style={dynamicStyles.sectionTitle}>{t('setting.account')}</Text>
       <SettingItem
-        title={t("setting.changePassword")}
+        title={t('setting.changePassword')}
         onPress={() => router.push("/change-password")}
       />
 
       {/* Sección de Notificaciones */}
-      <Text style={dynamicStyles.sectionTitle}>{t("setting.notifications")}</Text>
+      <Text style={dynamicStyles.sectionTitle}>{t('setting.notifications')}</Text>
       <SettingItem
-        title={t("setting.manageNotifications")}
+        title={t('setting.manageNotifications')}
         onPress={() => router.push("/notifications")}
       />
 
       {/* Sección de Idioma */}
-      <Text style={dynamicStyles.sectionTitle}>{t("setting.language")}</Text>
-      <SettingItem 
-        title={t("setting.language")}
+      <Text style={dynamicStyles.sectionTitle}>{t('setting.language')}</Text>
+      <SettingItem
+        title={currentLanguage}
         onPress={() => setLanguageModalVisible(true)}
       />
 
       {/* Sección de Tema */}
-      <Text style={dynamicStyles.sectionTitle}>{t("setting.theme")}</Text>
+      <Text style={dynamicStyles.sectionTitle}>{t('setting.theme')}</Text>
       <SettingItem
-        title={t(`setting.${theme.toLowerCase()}`)}
+        title={theme}
         onPress={() => setThemeModalVisible(true)}
       />
 
       {/* Modales */}
       <SelectorModal
         visible={languageModalVisible}
-        title={t("setting.selectLanguage")}
-        options={[t("setting.spanish"), t("setting.english")]}
+        title={t('setting.selectLanguage')}
+        options={[t('setting.spanish'), t('setting.english')]}  // Opciones traducidas
         onSelect={handleLanguageChange}
         onClose={() => setLanguageModalVisible(false)}
       />
       
       <SelectorModal
         visible={themeModalVisible}
-        title={t("setting.selectTheme")}
-        options={[t("setting.light"), t("setting.dark")]}
+        title={t('setting.selectTheme')}
+        options={[t('setting.light'), t('setting.dark')]}  // Opciones traducidas
         onSelect={handleThemeChange}
         onClose={() => setThemeModalVisible(false)}
       />

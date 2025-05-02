@@ -55,9 +55,9 @@ const HomeScreen: React.FC = () => {
     },
   })
 
-  const gradientColors = theme === "Claro" 
-    ? [colors.bannerImageBackground, colors.background] 
-    : [colors.bannerBackground, colors.background]
+  const gradientColors: [string, string, ...string[]] = theme === "Claro" 
+  ? [colors.bannerImageBackground, colors.background] 
+  : [colors.bannerBackground, colors.background];
 
   return (
     <SafeAreaView style={dynamicStyles.safeArea}>

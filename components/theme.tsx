@@ -27,6 +27,8 @@ export type ThemeColors = {
   cardBackground: string;
 
   tabBarBackground: string;
+  subtitle: string;
+  cardText: string;
 };
 
 export const lightColors: ThemeColors = {
@@ -57,7 +59,9 @@ export const lightColors: ThemeColors = {
   buttonBackground: '#EEF2F6',
   cardBackground: '#FFFFFF',
 
-  tabBarBackground: '#FFF'
+  tabBarBackground: '#FFF',
+  subtitle: "#FFFFFF",
+  cardText: "#000000",
 };
 
 export const darkColors: ThemeColors = {
@@ -88,7 +92,9 @@ export const darkColors: ThemeColors = {
   buttonBackground: '#1E1E1E',
   cardBackground: '#2A2A2A',
 
-  tabBarBackground: '#1E1E1E'
+  tabBarBackground: '#1E1E1E',
+  subtitle: "#FFFFFF",
+  cardText: "#FFFFFF",
 };
 
 export const getThemeColors = (theme: "Claro" | "Oscuro"): ThemeColors => {

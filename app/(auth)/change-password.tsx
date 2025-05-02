@@ -22,6 +22,7 @@ const ChangePasswordScreen: React.FC = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      paddingTop: 80,
     },
     headerTitle: {
       fontSize: 28,
@@ -45,34 +46,38 @@ const ChangePasswordScreen: React.FC = () => {
       borderColor: colors.border,
     },
     errorText: {
-      color: colors.primary,
+      color: colors.text,
       fontSize: 14,
       marginTop: 4,
       marginLeft: 12,
-    }
+    },
+    labelStyle: { 
+      color: colors.text,
+      fontSize: 16,
+      fontWeight: "600"
+    },
   });
 
   const [error, setError] = useState("");
 
   const handleChangePassword = () => {
     if (!currentPassword || !newPassword || !confirmPassword) {
-      setError(t("change-password.fillAllFields"));
+      setError(t("Change-password.llenaloscampos"));
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError(t("change-password.passwordsDontMatch"));
+      setError(t("Change-password.contraseñaCorta"));
       return;
     }
 
     if (newPassword.length < 8) {
-      setError(t("change-password.passwordTooShort"));
+      setError(t("Change-password.cambioContraseña"));
       return;
     }
 
     setError("");
     console.log("Password changed successfully");
-    // Add your password change logic here
   };
 
   const baseInputProps = {
@@ -82,14 +87,14 @@ const ChangePasswordScreen: React.FC = () => {
     labelStyle: { color: colors.text },
     iconColor: colors.icon,
     inputStyle: styles.inputBackground,
-    textColor: colors.text,
+    textColor: colors.subtitle,
     placeholderTextColor: colors.placeholder
   };
 
   const inputFields = [
     {
       ...baseInputProps,
-      label: t("change-password.currentPassword"),
+      label: t("Change-password.contraseñaActual"),
       value: currentPassword,
       onChangeText: (text: string) => {
         setCurrentPassword(text);
@@ -98,7 +103,7 @@ const ChangePasswordScreen: React.FC = () => {
     },
     {
       ...baseInputProps,
-      label: t("change-password.newPassword"),
+      label: t("Change-password.nuevaContraseña"),
       value: newPassword,
       onChangeText: (text: string) => {
         setNewPassword(text);
@@ -107,7 +112,7 @@ const ChangePasswordScreen: React.FC = () => {
     },
     {
       ...baseInputProps,
-      label: t("change-password.confirmPassword"),
+      label: t("Change-password.confirmarContraseña"),
       value: confirmPassword,
       onChangeText: (text: string) => {
         setConfirmPassword(text);
@@ -120,7 +125,7 @@ const ChangePasswordScreen: React.FC = () => {
     <Form style={styles.container}>
       <FormHeader>
         <Text style={styles.headerTitle}>
-          {t('change-password.changePassword')}
+          {t('Change-password.buttonChangePasword')}
         </Text>
       </FormHeader>
 
@@ -131,10 +136,10 @@ const ChangePasswordScreen: React.FC = () => {
 
       <FormFooter>
         <Button
-          label={t('change-password.changeButton')}
+          label={t('Change-password.buttonChangePasword')}
           onPress={handleChangePassword}
           style={[styles.button, { backgroundColor: colors.primary }]}
-          labelStyle={{ color: colors.buttonText }}
+          labelStyle={{ color: colors.text }}
         />
       </FormFooter>
     </Form>

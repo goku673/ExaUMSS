@@ -16,6 +16,7 @@ export default function GuideScreen() {
       flex: 1,
       padding: 20,
       backgroundColor: colors.background,
+      paddingTop: 44,
     },
     title: {
       fontSize: 24,
@@ -27,7 +28,7 @@ export default function GuideScreen() {
     subtitle: {
       fontSize: 16,
       color: colors.textSecondary,
-      marginBottom: 16,
+      marginBottom: 10,
       textAlign: "center",
     },
     stepContainer: {
@@ -35,7 +36,7 @@ export default function GuideScreen() {
       alignItems: "flex-start",
       marginBottom: 12,
       backgroundColor: colors.cardBackground,
-      padding: 16,
+      padding: 0,
       borderRadius: 8,
     },
     stepNumber: {
@@ -43,13 +44,13 @@ export default function GuideScreen() {
       fontWeight: "bold",
       color: colors.primary,
       marginRight: 12,
-      minWidth: 24,
+      minWidth: 20,
     },
     stepText: {
       fontSize: 16,
       color: colors.text,
       flex: 1,
-      lineHeight: 24,
+      lineHeight: 20,
     },
     videoContainer: {
       marginVertical: 16,
@@ -65,7 +66,7 @@ export default function GuideScreen() {
     footer: {
       fontSize: 14,
       color: colors.textSecondary,
-      marginTop: 14,
+      marginTop: -18,
       textAlign: "center",
       paddingHorizontal: 20,
     },
@@ -102,7 +103,7 @@ export default function GuideScreen() {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.subtitle}>{t('guide.helpVideo')}</Text>
+        <Text style={styles.subtitle}>{t('guide.Help video')}</Text>
         <View style={styles.videoContainer}>
           <YoutubePlayer
             height={200}

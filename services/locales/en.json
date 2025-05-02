@@ -69,7 +69,10 @@
       "contraseñaActual": "Current password",
       "nuevaContraseña": "New password",
       "confirmarContraseña": "Confirm password",
-      "buttonChangePasword": "Change password"
+      "buttonChangePasword": "Change password",
+      "llenaloscampos": "Fill in all fields",
+      "contraseñaCorta": "The password is too short",
+      "cambioContraseña": "Password change successful"
     },
     "practice" :{
       "Practice": "Practice",
@@ -113,16 +116,22 @@
       "Download": "Download"
     },
     "login": {
-      "welcome": "Welcome to ExaUMSS",
+      "login": "Login",
+      "email": "Email",
       "username": "Username",
       "password": "Password",
-      "forgotPassword": "Forgot your password?",
-      "signIn": "Sign in",
+      "forgotPassword": "Forgot Password?",
+      "loginButton": "Login",
+      "registerButton": "Register",
+      "welcomeBack": "Welcome back!",
+      "welcomeMessage": "Please enter your credentials to continue.",
+      "rememberMe": "Remember me",
       "noAccount": "Don't have an account?"
     },
     "register": {
       "createAccount": "Create an account",
       "name": "Name",
+      "apellido": "Last Name",
       "email": "Email",
       "confirmPassword": "Confirm Password",
       "signUp": "Sign up",

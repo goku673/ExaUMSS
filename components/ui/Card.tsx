@@ -1,19 +1,42 @@
 import React from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { 
+  View, 
+  StyleSheet, 
+  Image, 
+  Text, 
+  TouchableOpacity, 
+  ImageSourcePropType,
+  TextStyle,
+  ViewStyle
+} from "react-native";
 
 interface CardProps {
   title: string;
   description: string;
-  image: any;
+  image: ImageSourcePropType;
   onPress: () => void;
+  titleStyle?: TextStyle;
+  descriptionStyle?: TextStyle;
+  containerStyle?: ViewStyle;
 }
 
-const Card: React.FC<CardProps> = ({ title, description, image, onPress}) => {
+const Card: React.FC<CardProps> = ({ 
+  title, 
+  description, 
+  image, 
+  onPress,
+  titleStyle,
+  descriptionStyle,
+  containerStyle
+}) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity 
+      style={[styles.container, containerStyle]} 
+      onPress={onPress}
+    >
       <Image source={image} style={styles.image} />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
+      <Text style={[styles.title, titleStyle]}>{title || "Sin título"}</Text>
+      <Text style={[styles.description, descriptionStyle]}>{description || "Sin descripción"}</Text>
     </TouchableOpacity>
   );
 };
@@ -25,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 8,
     alignItems: "flex-start",
-    marginBottom: 16,
+    marginBottom: 18,
     elevation: 2,
     borderWidth: 1,
     borderColor: "#CCC",
@@ -39,7 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 18, 
     fontWeight: "bold", 
     textAlign: "left",
-    color: "#333", 
+    color: "#333",
     marginBottom: 4,
   },
   description: {

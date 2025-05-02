@@ -26,7 +26,7 @@ const AdminProfile: React.FC = () => {
     header: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 24,
+      marginBottom: 10,
     },
     headerTitle: {
       fontSize: 20,
@@ -50,7 +50,7 @@ const AdminProfile: React.FC = () => {
       fontSize: 18,
       fontWeight: "bold",
       color: colors.text,
-      marginBottom: 4,
+      marginBottom: 1,
       textAlign: "center",
     },
     profileJoined: {
@@ -60,8 +60,8 @@ const AdminProfile: React.FC = () => {
     buttonContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 24,
-      gap: 12,
+      marginBottom: 10,
+      gap: 6,
     },
     editButton: {
       flex: 1,
@@ -74,7 +74,7 @@ const AdminProfile: React.FC = () => {
       backgroundColor: colors.primary,
     },
     progressSection: {
-      marginBottom: 24,
+      marginBottom: 10,
     },
     progressText: {
       fontSize: 16,
@@ -111,7 +111,7 @@ const AdminProfile: React.FC = () => {
     historyItem: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 16,
+      marginBottom: 1,
       padding: 12,
       backgroundColor: colors.cardBackground,
       borderRadius: 8,
@@ -182,7 +182,7 @@ const AdminProfile: React.FC = () => {
           label={t("profile.manageDownloads")}
           onPress={() => console.log("Manage Downloads")}
           style={styles.manageButton}
-          labelStyle={{ color: colors.buttonText }}
+          labelStyle={{ color: colors.text }}
         />
       </View>
 

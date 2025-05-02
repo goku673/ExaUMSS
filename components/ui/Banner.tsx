@@ -36,10 +36,10 @@ const Banner: React.FC = () => {
       </View>
       <View style={styles.textContainer}>
         <Text style={[styles.welcomeText, { color: isDark ? "#fff" : "#000" }]}>
-          {t("welcome")} {/* "Bienvenido a" */}
+          {t("Banner.Welcome")} {/* "Bienvenido a" */}
         </Text>
         <Text style={[styles.universityText, { color: isDark ? "#fff" : "#000" }]}>
-          {t("universityName")} {/* "Universidad Mayor de San Simón" */}
+          {t("Banner.Major University of San Simón")} {/* "Universidad Mayor de San Simón" */}
         </Text>
       </View>
     </View>
@@ -50,10 +50,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 20,
+    marginVertical: 30,
+    paddingTop: 11,
   },
   imageContainer: {
-    width: width * 0.9,
+    width: 500,
     height: 200,
     position: "relative",
   },

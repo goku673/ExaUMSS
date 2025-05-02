@@ -10,6 +10,15 @@ export default function TabsLayout() {
   const colors = getThemeColors(theme);
   const { t } = useTranslation();
 
+  // Asegúrate de que todas las traducciones devuelvan componentes válidos
+  const tabTitles = {
+    inicio: t('layout.inicio') || 'Inicio',
+    perfil: t('layout.perfil') || 'Perfil',
+    guia: t('layout.guia') || 'Guía',
+    practicas: t('layout.practicas') || 'Prácticas',
+    ajustes: t('layout.ajustes') || 'Ajustes'
+  };
+
   return (
     <Tabs
       screenOptions={{
@@ -33,7 +42,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" color={color} size={size} />
           ),
-          title: t('layout.inicio'),
+          title: tabTitles.inicio,
         }}
       />
       <Tabs.Screen
@@ -42,7 +51,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" color={color} size={size} />
           ),
-          title: t('layout.perfil'),
+          title: tabTitles.perfil,
         }}
       />
       <Tabs.Screen
@@ -51,7 +60,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="book" color={color} size={size} />
           ),
-          title: t('layout.guia'),
+          title: tabTitles.guia,
         }}
       />
       <Tabs.Screen
@@ -60,7 +69,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="archive" color={color} size={size} />
           ),
-          title: t('layout.practicas'),
+          title: tabTitles.practicas,
         }}
       />
       <Tabs.Screen
@@ -69,28 +78,9 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings" color={color} size={size} />
           ),
-          title: t('layout.ajustes'),
+          title: tabTitles.ajustes,
         }}
       />
     </Tabs>
   );
 }
-/*
-//probar
-import React from "react";
-import { Provider as PaperProvider } from "react-native-paper";
-import LoginScreen from "@/components/ui/LoginScreen";
-import { ThemeProvider } from "@/components/ui/ThemeContext";
-import "@/services/i18n";
-
-export default function LoginLayout() {
-  return (
-    <ThemeProvider>
-      <PaperProvider>
-        <LoginScreen />
-      </PaperProvider>
-    </ThemeProvider>
-  );
-}
-
-*/

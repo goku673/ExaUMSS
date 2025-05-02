@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import EditProfile from "@/components/ui/editProfile";
+import { View, StyleSheet } from "react-native";
 import AdminProfile from "@/components/ui/adminProfile";
+import { useTheme } from "@/components/ui/ThemeContext";
 
 export default function ProfileScreen() {
+  const { theme } = useTheme();
+  
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme === "Oscuro" ? "#121212" : "#FFF" }]}>
       <AdminProfile/>
     </View>
   );
@@ -13,10 +15,6 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: "bold",
+    flex: 1,
   },
 });
