@@ -1,79 +1,134 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Asegúrate de tener instalada esta librería
+import { Ionicons } from "@expo/vector-icons";
 import Text from "@/components/ui/Text";
 import { router } from "expo-router";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
 
-const notificaciones = [
-  { id: "1", titulo: "Nuevo examen disponible", descripcion: "Consulta el último examen en tu facultad." },
-  { id: "2", titulo: "Recordatorio", descripcion: "No olvides completar tu perfil." },
-  { id: "3", titulo: "Actualización del sistema", descripcion: "El sistema se actualizará esta noche a las 12:00 AM." },
+// Notification data with translations
+const getNotifications = (t: (key: string) => string) => [
+  { 
+    id: "1", 
+    title: t("notification.newExam"), 
+    description: t("notification.newExamDesc") 
+  },
+  { 
+    id: "2", 
+    title: t("notification.reminder"), 
+    description: t("notification.profileReminder") 
+  },
+  { 
+    id: "3", 
+    title: t("notification.update"), 
+    description: t("notification.systemUpdate") 
+  },
 ];
 
-const PantallaNotificaciones: React.FC = () => {
-  const renderizarNotificacion = ({ item }: { item: { id: string; titulo: string; descripcion: string } }) => (
-    <View style={styles.itemNotificacion}>
-      <Text style={styles.tituloNotificacion}>{item.titulo}</Text>
-      <Text style={styles.descripcionNotificacion}>{item.descripcion}</Text>
+const NotificationsScreen: React.FC = () => {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
+
+  const notifications = useMemo(() => getNotifications(t), [t]);
+
+  const styles = useMemo(() => StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+      paddingTop: 50,
+      backgroundColor: colors.cardBackground,
+    },
+    backButton: {
+      marginRight: 16,
+    },
+    headerTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: colors.text,
+    },
+    listContainer: {
+      padding: 16,
+    },
+    notificationItem: {
+      padding: 16,
+      borderRadius: 8,
+      backgroundColor: colors.cardBackground,
+      marginBottom: 12,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    notificationTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 4,
+    },
+    notificationDescription: {
+      fontSize: 14,
+      color: colors.secondaryText,
+      lineHeight: 20,
+    },
+    emptyContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 20,
+    },
+    emptyText: {
+      fontSize: 16,
+      color: colors.secondaryText,
+      textAlign: "center",
+    },
+  }), [colors]);
+
+  const renderNotification = ({ item }: { item: typeof notifications[0] }) => (
+    <TouchableOpacity 
+      style={styles.notificationItem}
+      onPress={() => console.log("Notification pressed", item.id)}
+    >
+      <Text style={styles.notificationTitle}>{item.title}</Text>
+      <Text style={styles.notificationDescription}>{item.description}</Text>
+    </TouchableOpacity>
+  );
+
+  const renderEmptyComponent = () => (
+    <View style={styles.emptyContainer}>
+      <Ionicons name="notifications-off" size={40} color={colors.secondaryText} />
+      <Text style={styles.emptyText}>{t("notification.empty")}</Text>
     </View>
   );
 
   return (
-    <View style={styles.contenedor}>
-      <View style={styles.encabezado}>
-        <TouchableOpacity style={styles.botonAtras} onPress={() => router.push("/(tabs)/settings")}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={() => router.back()}
+        >
+          <Ionicons name="arrow-back" size={24} color={colors.icon} />
         </TouchableOpacity>
-        <Text style={styles.tituloEncabezado}>Notificaciones</Text>
+        <Text style={styles.headerTitle}>{t('notification.title')}</Text>
       </View>
+
       <FlatList
-        data={notificaciones}
+        data={notifications}
         keyExtractor={(item) => item.id}
-        renderItem={renderizarNotificacion}
-        contentContainerStyle={styles.listaContenedor}
+        renderItem={renderNotification}
+        contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={renderEmptyComponent}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  contenedor: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  encabezado: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-  },
-  botonAtras: {
-    marginRight: 16,
-  },
-  tituloEncabezado: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#000",
-  },
-  listaContenedor: {
-    padding: 16,
-  },
-  itemNotificacion: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-  },
-  tituloNotificacion: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
-  },
-  descripcionNotificacion: {
-    fontSize: 14,
-    color: "#666",
-    marginTop: 4,
-  },
-});
-
-export default PantallaNotificaciones;
+export default NotificationsScreen;

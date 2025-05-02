@@ -1,0 +1,138 @@
+{
+    "setting": {
+      "settings": "Configuración",
+      "account": "Cuenta",
+      "notifications": "Notificaciones",
+      "language": "Idioma",
+      "theme": "Tema",
+      "changePassword": "Cambiar contraseña",
+      "manageNotifications": "Gestionar notificaciones",
+      "spanish": "Español",
+      "english": "Inglés",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "selectLanguage": "Seleccionar Idioma",
+      "selectTheme": "Seleccionar Tema"
+    },
+    "editProfile": {
+      "title": "Editar Perfil",
+      "name": "Nombre",
+      "namePlaceholder": "Ingrese su nombre",
+      "gender": "Género",
+      "genderPlaceholder": "Ingrese su género",
+      "age": "Edad",
+      "agePlaceholder": "Ingrese su edad",
+      "joinedDate": "Fecha de Unión",
+      "joinedDatePlaceholder": "Ingrese la fecha de unión",
+      "saveButton": "Guardar Cambios",
+      "toggleLanguage": "Cambiar idioma"
+    },
+    "profile": {
+      "title": "Perfil",
+      "edit": "Editar Perfil",
+      "manageDownloads": "Gestionar Descargas",
+      "progress": "Progreso",
+      "downloadHistory": "Historial de Descargas",
+      "joined": "Unido en {{year}}",
+      "userInfo": "{{name}}, {{gender}}, edad {{age}}",
+      "anatomy": "Anatomía",
+      "biology": "Biología",
+      "chemistry": "Química",
+      "january": "enero",
+      "december": "diciembre",
+      "november": "noviembre",
+      "Download": "Descargar",
+      "male": "Masculino",
+      "female": "Femenino"
+    },
+    "Banner": {
+      "Welcome": "Bienvenido",
+      "Major University of San Simón": "Universidad Mayor de San Simón"
+    },
+    "guide":{
+      "title": "Guía",
+      "description0": "Sigue estos pasos para comenzar:",
+      "description1": "Abre la aplicación e inicia sesión.",
+      "description2": "Navega a través de las pestañas para explorar diferentes secciones como Facultades, Perfil y Configuración.",
+      "description3": "Utiliza la pestaña de Facultades para acceder a recursos relacionados con tu facultad.",
+      "description4": "Actualiza la información de tu perfil en la pestaña de Perfil.",
+      "description5": "Explora la aplicación para descubrir más funciones y recursos.",
+      "Help video": "Video de ayuda:",
+      "description6": "Descripción de la aplicación"
+    },
+    "[fac]": {
+      "Entrance exams for": "Exámenes de ingreso para ",
+      "entranceExamsFor": "Exámenes de ingreso para {{faculty}}"
+    },
+    "Change-password" :{
+      "Change password": "Cambiar contraseña",
+      "contraseñaActual": "Contraseña actual",
+      "nuevaContraseña": "Nueva contraseña",
+      "confirmarContraseña": "Confirmar contraseña",
+      "buttonChangePasword": "Cambiar contraseña"
+    },
+    "practice" :{
+      "Practice": "Practicas",
+      "Select a subject to start": "Seleccione una practica para comenzar",
+      "Exams of": "Exámenes de ",
+      "exams available": "exámenes disponibles",
+      "Calculus": "Cálculo",
+      "Algebra": "Álgebra",
+      "Biology": "Biología",
+      "History": "Historia",
+      "biology_exam_2022": "Examen de Biología - 2022",
+      "Search subject": "Buscar materia..."
+    },
+    "notification": {
+      "title": "Notificaciones",
+      "newExam": "Nueva examen disponible",
+      "newExamDesc": "Revisa el último examen de tu facultad",
+      "reminder": "Recordatorio",
+      "profileReminder": "No olvides completar tu perfil",
+      "update": "Actualización del sistema",
+      "systemUpdate": "El sistema se ha actualizado correctamente",
+      "empty": "No hay notificaciones aún"
+    },
+    "layout" :{
+      "inicio": "Inicio",
+      "perfil": "Perfil",
+      "guia": "Guía",
+      "ajustes": "Ajustes",
+      "practicas": "Practicas"
+    },
+    "cardGrig": {
+      "title": "Selecciona tu facultad",
+      "facultad": "Facultad",
+      "facultadContext": "Accede a los recursos de cada facultad",
+      "reciente": "Reciente",
+      "recienteContext": "Accede a tus recursos recientes",
+      "guia": "Guía",
+      "guiaContext": "Lea la guia de la aplicación",
+      "facMed": "Facultad de Medicina",
+      "facDer": "Facultad de Derecho",
+      "facArq": "Facultad de Arquitectura"
+    },
+    "FacultyMat": {
+      "Download": "Descargar"
+    },
+    "login": {
+      "login": "Iniciar sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "loginButton": "Iniciar sesión",
+      "registerButton": "Registrarse",
+      "welcomeBack": "Bienvenido de nuevo",
+      "welcomeMessage": "Estamos felices de verte de nuevo. Inicia sesión para continuar.",
+      "rememberMe": "Recuérdame"
+    },
+    "register": {
+      "createAccount": "Crear una cuenta",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "confirmPassword": "Confirmar contraseña",
+      "signUp": "Registrarse",
+      "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión"
+    }
+  }
+  

@@ -1,12 +1,16 @@
 import React from "react";
-import { Modal, View, TouchableOpacity, StyleSheet } from "react-native";
-import Text from "./ui/Text";
+import Modal from "@/components/ui/Modal";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { useTranslation } from "react-i18next";
+
 interface SelectorModalProps {
   visible: boolean;
   title: string;
   options: string[];
   onSelect: (option: string) => void;
   onClose: () => void;
+  translateOption?: (option: string) => string;
 }
 
 const SelectorModal: React.FC<SelectorModalProps> = ({
@@ -15,71 +19,44 @@ const SelectorModal: React.FC<SelectorModalProps> = ({
   options,
   onSelect,
   onClose,
+  translateOption,
 }) => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+
+  const backgroundColor = theme === "Oscuro" ? "#333" : "#fff";
+  const textColor = theme === "Oscuro" ? "#fff" : "#000";
+
   return (
-    <Modal
-      visible={visible}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={onClose}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>{title}</Text>
-          {options.map((option) => (
-            <TouchableOpacity
-              key={option}
-              style={styles.modalOption}
-              onPress={() => onSelect(option)}
-            >
-              <Text style={styles.modalOptionText}>{option}</Text>
-            </TouchableOpacity>
-          ))}
-          <TouchableOpacity style={styles.modalClose} onPress={onClose}>
-            <Text style={styles.modalCloseText}>Cerrar</Text>
+    <Modal visible={visible} onDismiss={onClose}>
+      <View style={[styles.modalContent, { backgroundColor }]}>
+        <Text style={[styles.title, { color: textColor }]}>{title}</Text>
+        {options.map((option, index) => (
+          <TouchableOpacity key={index} onPress={() => onSelect(option)}>
+            <Text style={[styles.option, { color: textColor }]}>
+              {translateOption ? translateOption(option) : option}
+            </Text>
           </TouchableOpacity>
-        </View>
+        ))}
       </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
   modalContent: {
-    width: "80%",
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 16,
+    padding: 20,
+    borderRadius: 10,
     alignItems: "center",
   },
-  modalTitle: {
-    fontSize: 18,
+  title: {
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 20,
   },
-  modalOption: {
-    paddingVertical: 12,
-    width: "100%",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-  },
-  modalOptionText: {
-    fontSize: 16,
-    color: "#000",
-  },
-  modalClose: {
-    marginTop: 16,
-  },
-  modalCloseText: {
-    fontSize: 16,
-    color: "#007BFF",
+  option: {
+    fontSize: 18,
+    marginVertical: 10,
   },
 });
 

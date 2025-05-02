@@ -1,154 +1,212 @@
-import React from "react";
-import {
-    SectionList,
-    TouchableOpacity,
-    StyleSheet,
-    View,
-    Text as RNText,
-    Alert,
-    Image,
-} from "react-native";
+import React, { useState } from "react";
+import { SectionList, TouchableOpacity, StyleSheet, View, Image, ActivityIndicator } from "react-native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { images } from "@/assets/images";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
+import Text from "@/components/ui/Text";
 
-// Datos de ejemplo con PDFs
-const pdfMaterials = [
-    {
-        title: "2022",
-        data: [
-            {
-                title: "UMSS 2022 Entrance Exam - Mathematics",
-                url: "https://example.com/matematicas2022.pdf",
-                size: "12MB",
-            },
-            {
-                title: "UMSS 2022 Entrance Exam - Physics",
-                url: "https://example.com/fisica2022.pdf",
-                size: "15MB",
-            },
-        ],
-    },
-    {
-        title: "2021",
-        data: [
-            {
-                title: "UMSS 2021 Entrance Exam - Chemistry",
-                url: "https://example.com/quimica2021.pdf",
-                size: "18MB",
-            },
-            {
-                title: "UMSS 2021 Entrance Exam - Biology",
-                url: "https://example.com/biologia2021.pdf",
-                size: "20MB",
-            },
-        ],
-    },
-];
+interface PdfMaterial {
+  title: string;
+  url: string;
+  size: string;
+}
+
+interface PdfSection {
+  title: string;
+  data: PdfMaterial[];
+}
 
 const FacultyMaterials: React.FC = () => {
-    const handlePdfPress = async (pdf: { title: string; url: string }) => {
-        try {
-            const fileName = pdf.title.replace(/\s/g, "_") + ".pdf";
-            const localUri = FileSystem.cacheDirectory + fileName;
-            const fileInfo = await FileSystem.getInfoAsync(localUri);
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
+  const [downloading, setDownloading] = useState<Record<string, boolean>>({});
 
-            if (!fileInfo.exists) {
-                await FileSystem.downloadAsync(pdf.url, localUri);
-            }
-            if (!(await Sharing.isAvailableAsync())) {
-                Alert.alert("PDF descargado", `Archivo guardado en: ${localUri}`);
-            } else {
-                await Sharing.shareAsync(localUri);
-            }
-        } catch (error) {
-            console.error("Error al descargar o compartir el PDF:", error);
-            Alert.alert("Error", "No se pudo descargar o abrir el PDF");
-        }
-    };
+  const pdfMaterials: PdfSection[] = [
+    {
+      title: "2022",
+      data: [
+        {
+          title: t('materials.mathExam2022'),
+          url: "https://example.com/matematicas2022.pdf",
+          size: "12MB",
+        },
+        {
+          title: t('materials.physicsExam2022'),
+          url: "https://example.com/fisica2022.pdf",
+          size: "15MB",
+        },
+      ],
+    },
+    {
+      title: "2021",
+      data: [
+        {
+          title: t('materials.chemistryExam2021'),
+          url: "https://example.com/quimica2021.pdf",
+          size: "18MB",
+        },
+        {
+          title: t('materials.biologyExam2021'),
+          url: "https://example.com/biologia2021.pdf",
+          size: "20MB",
+        },
+      ],
+    },
+  ];
 
-    return (
-        <View style={styles.container}>
-            <SectionList
-                sections={pdfMaterials}
-                keyExtractor={(item, index) => item.title + index}
-                renderItem={({ item }) => (
-                    <View style={styles.itemContainer}>
-                        <View style={styles.itemInfo}>
-                            <Image
-                                source={images.pdfIcon}
-                                style={styles.icon}
-                            />
-                            <View>
-                                <RNText style={styles.itemTitle}>{item.title}</RNText>
-                                <RNText style={styles.itemSubtitle}>PDF • {item.size}</RNText>
-                            </View>
-                        </View>
-                        <TouchableOpacity
-                            onPress={() => handlePdfPress(item)}
-                            style={styles.downloadButton}
-                        >
-                            <RNText style={styles.downloadButtonText}>Download</RNText>
-                        </TouchableOpacity>
-                    </View>
-                )}
-                renderSectionHeader={({ section: { title } }) => (
-                    <RNText style={styles.headerText}>{title}</RNText>
-                )}
-            />
-        </View>
-    );
-};
+  const handlePdfPress = async (pdf: PdfMaterial) => {
+    try {
+      setDownloading(prev => ({ ...prev, [pdf.url]: true }));
+      
+      const fileName = pdf.title.replace(/\s/g, "_") + ".pdf";
+      const localUri = FileSystem.cacheDirectory + fileName;
+      const fileInfo = await FileSystem.getInfoAsync(localUri);
 
-const styles = StyleSheet.create({
+      if (!fileInfo.exists) {
+        const downloadResumable = FileSystem.createDownloadResumable(
+          pdf.url,
+          localUri,
+          {},
+          (downloadProgress) => {
+            const progress = downloadProgress.totalBytesWritten / downloadProgress.totalBytesExpectedToWrite;
+            console.log(`Download progress: ${progress * 100}%`);
+          }
+        );
+
+        await downloadResumable.downloadAsync();
+      }
+      if (!(await Sharing.isAvailableAsync())) {
+      } else {
+        await Sharing.shareAsync(localUri);
+      }
+    } catch (error) {
+      console.error("PDF download error:", error);
+    } finally {
+      setDownloading(prev => ({ ...prev, [pdf.url]: false }));
+    }
+  };
+
+  const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        padding: 16,
+      flex: 1,
+      backgroundColor: colors.background,
+      paddingHorizontal: 16,
     },
     headerText: {
-        fontSize: 20,
-        fontWeight: "bold",
-        backgroundColor: "#f0f0f0",
-        padding: 8,
-        marginBottom: 8,
+      fontSize: 18,
+      fontWeight: "600",
+      color: colors.text,
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      backgroundColor: colors.sectionHeaderBackground || colors.primaryLight,
+      marginTop: 8,
+      borderRadius: 8,
     },
     itemContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: "#EEE",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: 14,
+      paddingHorizontal: 16,
+      backgroundColor: colors.cardBackground,
+      borderRadius: 8,
+      marginVertical: 4,
+      borderWidth: 1,
+      borderColor: colors.border,
     },
     itemInfo: {
-        flexDirection: "row",
-        alignItems: "center",
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      marginRight: 12,
     },
     icon: {
-        width: 40,
-        height: 40,
-        marginRight: 12,
+      width: 40,
+      height: 40,
+      marginRight: 12,
+      tintColor: colors.primary,
+    },
+    textContainer: {
+      flex: 1,
     },
     itemTitle: {
-        fontSize: 16,
-        fontWeight: "bold",
+      fontSize: 16,
+      fontWeight: "500",
+      color: colors.text,
+      marginBottom: 2,
     },
     itemSubtitle: {
-        fontSize: 14,
-        color: "#666",
+      fontSize: 14,
+      color: colors.textSecondary,
     },
     downloadButton: {
-        backgroundColor: "#007BFF",
-        paddingVertical: 6,
-        paddingHorizontal: 12,
-        borderRadius: 4,
+      backgroundColor: colors.primary,
+      paddingVertical: 8,
+      paddingHorizontal: 16,
+      borderRadius: 8,
+      minWidth: 80,
+      justifyContent: "center",
+      alignItems: "center",
     },
     downloadButtonText: {
-        color: "#fff",
-        fontSize: 14,
-        fontWeight: "bold",
+      color: colors.buttonText,
+      fontSize: 14,
+      fontWeight: "500",
     },
-});
+    loadingIndicator: {
+      padding: 8,
+    },
+  });
+
+  return (
+    <View style={styles.container}>
+      <SectionList
+        sections={pdfMaterials}
+        keyExtractor={(item, index) => `${item.title}-${index}`}
+        renderItem={({ item }) => (
+          <View style={styles.itemContainer}>
+            <View style={styles.itemInfo}>
+              <Image
+                source={images.pdfIcon}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+              <View style={styles.textContainer}>
+                <Text style={styles.itemTitle}>{item.title}</Text>
+                <Text style={styles.itemSubtitle}>
+                  PDF • {item.size}
+                </Text>
+              </View>
+            </View>
+            
+            {downloading[item.url] ? (
+              <View style={styles.loadingIndicator}>
+                <ActivityIndicator color={colors.primary} />
+              </View>
+            ) : (
+              <TouchableOpacity
+                onPress={() => handlePdfPress(item)}
+                style={styles.downloadButton}
+                disabled={downloading[item.url]}
+              >
+                <Text style={styles.downloadButtonText}>
+                  {t('common.download')}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.headerText}>{title}</Text>
+        )}
+        stickySectionHeadersEnabled={false}
+      />
+    </View>
+  );
+};
 
 export default FacultyMaterials;

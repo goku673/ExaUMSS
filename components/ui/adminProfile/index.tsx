@@ -1,3 +1,4 @@
+
 import React from "react";
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import Text from "../Text";
@@ -5,17 +6,152 @@ import Button from "../Button";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { images } from "@/assets/images";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
 
 const AdminProfile: React.FC = () => {
   const router = useRouter();
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 16,
+      backgroundColor: colors.background,
+      paddingTop: 40,
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 24,
+    },
+    headerTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+      marginLeft: 16,
+      color: colors.text,
+    },
+    profileSection: {
+      alignItems: "center",
+      marginBottom: 24,
+    },
+    profileImage: {
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+      marginBottom: 12,
+      borderWidth: 2,
+      borderColor: colors.primary,
+    },
+    profileName: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 4,
+      textAlign: "center",
+    },
+    profileJoined: {
+      fontSize: 14,
+      color: colors.secondaryText,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 24,
+      gap: 12,
+    },
+    editButton: {
+      flex: 1,
+      backgroundColor: colors.buttonBackground,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    manageButton: {
+      flex: 1,
+      backgroundColor: colors.primary,
+    },
+    progressSection: {
+      marginBottom: 24,
+    },
+    progressText: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 8,
+    },
+    progressPercentage: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: colors.primary,
+      marginBottom: 12,
+    },
+    progressBar: {
+      height: 10,
+      backgroundColor: colors.inputBackground,
+      borderRadius: 5,
+      overflow: "hidden",
+    },
+    progressComplete: {
+      width: "50%",
+      height: "100%",
+      backgroundColor: colors.primary,
+    },
+    historySection: {
+      marginBottom: 40,
+    },
+    historyTitle: {
+      fontSize: 16,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 16,
+    },
+    historyItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 16,
+      padding: 12,
+      backgroundColor: colors.cardBackground,
+      borderRadius: 8,
+    },
+    historyTextContainer: {
+      flex: 1,
+      marginLeft: 16,
+    },
+    historyItemTitle: {
+      fontSize: 16,
+      fontWeight: "600",
+      color: colors.text,
+      marginBottom: 4,
+    },
+    historyItemDate: {
+      fontSize: 14,
+      color: colors.secondaryText,
+    },
+  });
+
+  const userInfo = {
+    name: "Freddy Amin",
+    gender: t("profile.male"),
+    age: "22",
+    joinYear: "2025",
+    progress: "50",
+    downloads: [
+      { subject: t("profile.anatomy"), date: t("profile.january") + " 8, 2022" },
+      { subject: t("profile.biology"), date: t("profile.december") + " 9, 2021" },
+      { subject: t("profile.chemistry"), date: t("profile.november") + " 10, 2021" },
+    ]
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+          <Ionicons name="arrow-back" size={24} color={colors.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Perfil</Text>
+        <Text style={styles.headerTitle}>{t("profile.title")}</Text>
       </View>
 
       <View style={styles.profileSection}>
@@ -23,165 +159,56 @@ const AdminProfile: React.FC = () => {
           source={images.profileFake}
           style={styles.profileImage}
         />
-        <Text style={styles.profileName}>Freddy Amin, Masculino, edad 22</Text>
-        <Text style={styles.profileJoined}>Unido en 2025</Text>
+        <Text style={styles.profileName}>
+          {t("profile.userInfo", {
+            name: userInfo.name,
+            gender: userInfo.gender,
+            age: userInfo.age
+          })}
+        </Text>
+        <Text style={styles.profileJoined}>
+          {t("profile.joined", { year: userInfo.joinYear })}
+        </Text>
       </View>
+
       <View style={styles.buttonContainer}>
         <Button
-          label="Editar Perfil"
+          label={t("profile.edit")}
           onPress={() => router.push("/(auth)/editprofile")}
           style={styles.editButton}
+          labelStyle={{ color: colors.text }}
         />
         <Button
-          label="Gestionar Descargas"
-          onPress={() => console.log("Gestionar Descargas")}
-          style={[styles.manageButton, styles.manageButtonText]}
+          label={t("profile.manageDownloads")}
+          onPress={() => console.log("Manage Downloads")}
+          style={styles.manageButton}
+          labelStyle={{ color: colors.buttonText }}
         />
       </View>
 
       <View style={styles.progressSection}>
-        <Text style={styles.progressText}>Progreso</Text>
-        <Text style={styles.progressPercentage}>50%</Text>
+        <Text style={styles.progressText}>{t("profile.progress")}</Text>
+        <Text style={styles.progressPercentage}>{userInfo.progress}%</Text>
         <View style={styles.progressBar}>
-          <View style={styles.progressComplete} />
+          <View style={[styles.progressComplete]} />
         </View>
       </View>
 
       <View style={styles.historySection}>
-        <Text style={styles.historyTitle}>Historial de Descargas</Text>
-        <View style={styles.historyItem}>
-          <Ionicons name="document-text-outline" size={24} color="#000" />
-          <View style={styles.historyTextContainer}>
-            <Text style={styles.historyItemTitle}>Anatomía - 2020</Text>
-            <Text style={styles.historyItemDate}>8 de enero, 2022</Text>
-          </View>
-        </View>
-        <View style={styles.historyItem}>
-          <Ionicons name="document-text-outline" size={24} color="#000" />
-          <View style={styles.historyTextContainer}>
-            <Text style={styles.historyItemTitle}>Biología - 2020</Text>
-            <Text style={styles.historyItemDate}>9 de diciembre, 2021</Text>
-          </View>
-        </View>
-        <View style={styles.historyItem}>
-          <Ionicons name="document-text-outline" size={24} color="#000" />
-          <View style={styles.historyTextContainer}>
-            <Text style={styles.historyItemTitle}>Química - 2020</Text>
-            <Text style={styles.historyItemDate}>10 de noviembre, 2021</Text>
-          </View>
-        </View>
+        <Text style={styles.historyTitle}>{t("profile.downloadHistory")}</Text>
+        {userInfo.downloads.map((item, index) => (
+          <TouchableOpacity key={index} style={styles.historyItem}>
+            <Ionicons name="document-text-outline" size={24} color={colors.icon} />
+            <View style={styles.historyTextContainer}>
+              <Text style={styles.historyItemTitle}>{item.subject} - 2020</Text>
+              <Text style={styles.historyItemDate}>{item.date}</Text>
+            </View>
+            <Ionicons name="download" size={20} color={colors.icon} />
+          </TouchableOpacity>
+        ))}
       </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginLeft: 16,
-    color: "#000",
-  },
-  profileSection: {
-    alignItems: "center",
-    marginBottom: 24,
-  },
-  profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 8,
-  },
-  profileName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#000",
-  },
-  profileJoined: {
-    fontSize: 14,
-    color: "#666",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 24,
-  },
-  editButton: {
-    backgroundColor: "#E0E0E0",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 8,
-  },
-  manageButton: {
-    backgroundColor: "#007BFF",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 8,
-  },
-  manageButtonText: {
-    color: "#fff",
-  },
-  progressSection: {
-    marginBottom: 24,
-  },
-  progressText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
-    marginBottom: 8,
-  },
-  progressPercentage: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#007BFF",
-    marginBottom: 8,
-  },
-  progressBar: {
-    height: 10,
-    backgroundColor: "#E0E0E0",
-    borderRadius: 5,
-    overflow: "hidden",
-  },
-  progressComplete: {
-    width: "50%",
-    height: "100%",
-    backgroundColor: "#007BFF",
-  },
-  historySection: {
-    marginBottom: 24,
-  },
-  historyTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
-    marginBottom: 16,
-  },
-  historyItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  historyTextContainer: {
-    marginLeft: 16,
-  },
-  historyItemTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
-  },
-  historyItemDate: {
-    fontSize: 14,
-    color: "#666",
-  },
-});
 
 export default AdminProfile;

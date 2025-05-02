@@ -1,94 +1,302 @@
 "use client"
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { View, StyleSheet, FlatList, TouchableOpacity, TextInput, SafeAreaView, StatusBar } from "react-native"
-import Text from "@/components/ui/Text"
-import { MaterialCommunityIcons } from "@expo/vector-icons"
-// refactorizar todo
+import React, { useState, useEffect, useMemo } from "react";
+import { View, StyleSheet, FlatList, TouchableOpacity, TextInput, SafeAreaView, StatusBar } from "react-native";
+import Text from "@/components/ui/Text";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
 
-const subjects = [
-  { id: "1", name: "Cálculo" },
-  { id: "2", name: "Álgebra" },
-  { id: "3", name: "Biología" },
-  { id: "4", name: "Historia" },
-]
+type Subject = {
+  id: string;
+  key: string;
+};
 
-const exams = {
-  Biología: [
-    { id: "1", title: "Examen de Biología - 2022" },
-    { id: "2", title: "Examen de Biología - 2021" },
-  ],
-  Cálculo: [
-    { id: "1", title: "Examen de Cálculo - 2022" },
-    { id: "2", title: "Examen de Cálculo - 2021" },
-  ],
-  Álgebra: [
-    { id: "1", title: "Examen de Álgebra - 2022" },
-    { id: "2", title: "Examen de Álgebra - 2021" },
-  ],
-  Historia: [
-    { id: "1", title: "Examen de Historia - 2022" },
-    { id: "2", title: "Examen de Historia - 2021" },
-  ],
-}
+type Exam = {
+  id: string;
+  title: string;
+};
+
+type ExamData = {
+  [key: string]: Exam[];
+};
 
 const PracticeScreen: React.FC = () => {
-  const [selectedSubject, setSelectedSubject] = useState<keyof typeof exams | null>(null)
-  const [searchText, setSearchText] = useState("")
-  const [filteredSubjects, setFilteredSubjects] = useState(subjects)
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
+  
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [searchText, setSearchText] = useState("");
+  const [filteredSubjects, setFilteredSubjects] = useState<Subject[]>([]);
 
+  // Subjects data with translations
+  const subjects = useMemo(() => [
+    { id: "1", key: "Calculus" },
+    { id: "2", key: "Algebra" },
+    { id: "3", key: "Biology" },
+    { id: "4", key: "History" },
+  ], []);
+
+  // Exams data with translations
+  const exams = useMemo<ExamData>(() => ({
+    Biology: [
+      { id: "1", title: t('practice.biologyExam2022') },
+      { id: "2", title: t('practice.biologyExam2021') },
+    ],
+    Calculus: [
+      { id: "1", title: t('practice.calculusExam2022') },
+      { id: "2", title: t('practice.calculusExam2021') },
+    ],
+    Algebra: [
+      { id: "1", title: t('practice.algebraExam2022') },
+      { id: "2", title: t('practice.algebraExam2021') },
+    ],
+    History: [
+      { id: "1", title: t('practice.historyExam2022') },
+      { id: "2", title: t('practice.historyExam2021') },
+    ],
+  }), [t]);
+
+  // Filter subjects based on search text
   useEffect(() => {
-    if (searchText) {
-      const filtered = subjects.filter((subject) => subject.name.toLowerCase().includes(searchText.toLowerCase()))
-      setFilteredSubjects(filtered)
-    } else {
-      setFilteredSubjects(subjects)
-    }
-  }, [searchText])
+    const filtered = subjects.filter(subject =>
+      t(subject.key).toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredSubjects(filtered);
+  }, [searchText, subjects, t]);
 
-  const handleSubjectPress = (subject: keyof typeof exams) => {
-    setSelectedSubject(subject)
-  }
+  const handleSubjectPress = (subjectKey: string) => {
+    setSelectedSubject(subjectKey);
+  };
 
   const handleStartPractice = (examTitle: string) => {
-    alert(`Empezando a practicar: ${examTitle}`)
-  }
+    alert(`${t('practice.startingPractice')}: ${examTitle}`);
+  };
 
-  const renderSubjectItem = ({ item }: { item: (typeof subjects)[0] }) => (
-    <TouchableOpacity style={styles.subjectItem} onPress={() => handleSubjectPress(item.name as keyof typeof exams)}>
-      <View style={styles.subjectIconContainer}>
-        <MaterialCommunityIcons name="book-open-variant" size={24} color="#5B8FB9" />
+  const handleBack = () => {
+    setSelectedSubject(null);
+  };
+
+  const renderSubjectItem = ({ item }: { item: Subject }) => (
+    <TouchableOpacity
+      style={[styles.subjectItem, { 
+        backgroundColor: colors.cardBackground, 
+        borderColor: colors.border 
+      }]}
+      onPress={() => handleSubjectPress(item.key)}
+    >
+      <View style={[
+        styles.subjectIconContainer, 
+        { backgroundColor: colors.iconBackground }
+      ]}>
+        <MaterialCommunityIcons 
+          name="book-open-variant" 
+          size={24} 
+          color={colors.primary} 
+        />
       </View>
       <View style={styles.subjectContent}>
-        <Text style={styles.subjectText}>{item.name}</Text>
-        <Text style={styles.subjectExamCount}>
-          {exams[item.name as keyof typeof exams]?.length || 0} exámenes disponibles
+        <Text style={[styles.subjectText, { color: colors.text }]}>
+          {t(item.key)}
+        </Text>
+        <Text style={[styles.subjectExamCount, { color: colors.textSecondary }]}>
+          {exams[item.key]?.length || 0} {t('practice.examsAvailable')}
         </Text>
       </View>
     </TouchableOpacity>
-  )
+  );
 
-  const renderExamItem = ({ item }: { item: { id: string; title: string } }) => (
-    <View style={styles.examItem}>
-      <Text style={styles.examTitle}>{item.title}</Text>
-      <TouchableOpacity style={styles.practiceButton} onPress={() => handleStartPractice(item.title)}>
-        <Text style={styles.practiceButtonText}>Practicar</Text>
+  const renderExamItem = ({ item }: { item: Exam }) => (
+    <View style={[
+      styles.examItem, 
+      { 
+        backgroundColor: colors.cardBackground, 
+        borderColor: colors.border 
+      }
+    ]}>
+      <Text style={[styles.examTitle, { color: colors.text }]}>{item.title}</Text>
+      <TouchableOpacity 
+        style={[
+          styles.practiceButton, 
+          { backgroundColor: colors.primary }
+        ]} 
+        onPress={() => handleStartPractice(item.title)}
+      >
+        <Text style={styles.practiceButtonText}>{t('practice.practice')}</Text>
       </TouchableOpacity>
     </View>
-  )
+  );
+
+  const styles = StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    container: {
+      flex: 1,
+      padding: 16,
+    },
+    titleContainer: {
+      marginBottom: 24,
+    },
+    mainTitle: {
+      fontSize: 28,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 4,
+    },
+    subtitle: {
+      fontSize: 16,
+      color: colors.textSecondary,
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 20,
+    },
+    headerTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: colors.text,
+      textAlign: "center",
+      flex: 1,
+    },
+    backButton: {
+      padding: 8,
+      borderRadius: 8,
+    },
+    searchContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: colors.inputBackground,
+      borderRadius: 12,
+      paddingHorizontal: 16,
+      marginBottom: 20,
+      height: 50,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    searchIcon: {
+      marginRight: 10,
+      color: colors.icon,
+    },
+    searchInput: {
+      flex: 1,
+      fontSize: 16,
+      color: colors.text,
+      height: "100%",
+    },
+    subjectList: {
+      paddingBottom: 20,
+    },
+    subjectItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 16,
+      marginBottom: 12,
+      borderRadius: 12,
+      shadowColor: colors.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: theme === "Oscuro" ? 0.1 : 0.05,
+      shadowRadius: 8,
+      elevation: 2,
+      borderWidth: 1,
+    },
+    subjectIconContainer: {
+      width: 48,
+      height: 48,
+      borderRadius: 12,
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 16,
+    },
+    subjectContent: {
+      flex: 1,
+    },
+    subjectText: {
+      fontSize: 18,
+      fontWeight: "600",
+      marginBottom: 4,
+    },
+    subjectExamCount: {
+      fontSize: 14,
+    },
+    examList: {
+      paddingBottom: 20,
+    },
+    examItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: 16,
+      marginBottom: 12,
+      borderRadius: 12,
+      shadowColor: colors.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: theme === "Oscuro" ? 0.1 : 0.05,
+      shadowRadius: 8,
+      elevation: 2,
+      borderWidth: 1,
+    },
+    examTitle: {
+      fontSize: 16,
+      fontWeight: "500",
+      flex: 1,
+      marginRight: 12,
+    },
+    practiceButton: {
+      paddingVertical: 10,
+      paddingHorizontal: 16,
+      borderRadius: 10,
+      shadowColor: colors.primary,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 3,
+    },
+    practiceButtonText: {
+      color: colors.buttonText,
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    noResultsContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    noResultsText: {
+      fontSize: 16,
+      color: colors.textSecondary,
+    },
+  });
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F8F9FA" />
+      <StatusBar 
+        barStyle={theme === "Oscuro" ? "light-content" : "dark-content"} 
+        backgroundColor={colors.background} 
+      />
+      
       <View style={styles.container}>
         {selectedSubject ? (
           <>
             <View style={styles.header}>
-              <TouchableOpacity onPress={() => setSelectedSubject(null)} style={styles.backButton}>
-                <MaterialCommunityIcons name="arrow-left" size={24} color="#5B8FB9" />
+              <TouchableOpacity 
+                onPress={handleBack} 
+                style={[styles.backButton, { backgroundColor: colors.primaryLight }]}
+              >
+                <MaterialCommunityIcons 
+                  name="arrow-left" 
+                  size={24} 
+                  color={colors.primary} 
+                />
               </TouchableOpacity>
-              <Text style={styles.headerTitle}>Exámenes de {selectedSubject}</Text>
+              <Text style={styles.headerTitle}>
+                {t('practice.examsOf')} {t(selectedSubject)}
+              </Text>
               <View style={{ width: 24 }} />
             </View>
 
@@ -103,18 +311,25 @@ const PracticeScreen: React.FC = () => {
         ) : (
           <>
             <View style={styles.titleContainer}>
-              <Text style={styles.mainTitle}>Prácticas</Text>
-              <Text style={styles.subtitle}>Selecciona una materia para comenzar</Text>
+              <Text style={styles.mainTitle}>{t('practice.practice')}</Text>
+              <Text style={styles.subtitle}>
+                {t('practice.selectSubjectToStart')}
+              </Text>
             </View>
 
             <View style={styles.searchContainer}>
-              <MaterialCommunityIcons name="magnify" size={20} color="#B8C4D0" style={styles.searchIcon} />
+              <MaterialCommunityIcons 
+                name="magnify" 
+                size={20} 
+                color={colors.icon} 
+                style={styles.searchIcon} 
+              />
               <TextInput
                 style={styles.searchInput}
-                placeholder="Buscar materia..."
+                placeholder={t('practice.searchSubject')}
                 value={searchText}
                 onChangeText={setSearchText}
-                placeholderTextColor="#B8C4D0"
+                placeholderTextColor={colors.placeholder}
               />
             </View>
 
@@ -128,167 +343,16 @@ const PracticeScreen: React.FC = () => {
               />
             ) : (
               <View style={styles.noResultsContainer}>
-                <Text style={styles.noResultsText}>No se encontraron materias</Text>
+                <Text style={styles.noResultsText}>
+                  {t('practice.noSubjectsFound')}
+                </Text>
               </View>
             )}
           </>
         )}
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#F8F9FA",
-  },
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  titleContainer: {
-    marginBottom: 24,
-  },
-  mainTitle: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#303B4B",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#6C7A8C",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#303B4B",
-    textAlign: "center",
-    flex: 1,
-  },
-  backButton: {
-    padding: 8,
-    borderRadius: 8,
-    backgroundColor: "#EEF2F6",
-  },
-  searchContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#EEF2F6",
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    marginBottom: 20,
-    height: 50,
-    borderWidth: 1,
-    borderColor: "#E0E6ED",
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-    color: "#303B4B",
-    height: "100%",
-  },
-  subjectList: {
-    paddingBottom: 20,
-  },
-  subjectItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    marginBottom: 12,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: "#EEF2F6",
-  },
-  subjectIconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
-    backgroundColor: "#EEF2F6",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 16,
-  },
-  subjectContent: {
-    flex: 1,
-  },
-  subjectText: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#303B4B",
-    marginBottom: 4,
-  },
-  subjectExamCount: {
-    fontSize: 14,
-    color: "#6C7A8C",
-  },
-  examList: {
-    paddingBottom: 20,
-  },
-  examItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
-    marginBottom: 12,
-    backgroundColor: "#FFFFFF",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: "#EEF2F6",
-  },
-  examTitle: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#303B4B",
-    flex: 1,
-    marginRight: 12,
-  },
-  practiceButton: {
-    backgroundColor: "#5B8FB9",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-    shadowColor: "#5B8FB9",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  practiceButtonText: {
-    color: "#FFFFFF",
-    fontSize: 14,
-    fontWeight: "600",
-  },
-  noResultsContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noResultsText: {
-    fontSize: 16,
-    color: "#6C7A8C",
-  },
-})
-
-export default PracticeScreen
+export default PracticeScreen;

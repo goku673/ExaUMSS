@@ -7,75 +7,137 @@ import FormFooter from "@/components/ui/FormFooter";
 import FormInputs from "@/components/ui/FormInputs";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
 
 const ChangePasswordScreen: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    headerTitle: {
+      fontSize: 28,
+      fontWeight: "bold",
+      textAlign: "center",
+      marginBottom: 24,
+      color: colors.text,
+    },
+    button: {
+      marginTop: 24,
+      borderRadius: 12,
+      paddingVertical: 14,
+    },
+    inputContainer: {
+      marginBottom: 20,
+    },
+    inputBackground: {
+      backgroundColor: colors.inputBackground,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    errorText: {
+      color: colors.primary,
+      fontSize: 14,
+      marginTop: 4,
+      marginLeft: 12,
+    }
+  });
+
+  const [error, setError] = useState("");
 
   const handleChangePassword = () => {
-    if (newPassword !== confirmPassword) {
-      console.log("Passwords do not match");
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      setError(t("change-password.fillAllFields"));
       return;
     }
+
+    if (newPassword !== confirmPassword) {
+      setError(t("change-password.passwordsDontMatch"));
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setError(t("change-password.passwordTooShort"));
+      return;
+    }
+
+    setError("");
     console.log("Password changed successfully");
+    // Add your password change logic here
+  };
+
+  const baseInputProps = {
+    secureTextEntry: true,
+    icon: "lock",
+    containerStyle: styles.inputContainer,
+    labelStyle: { color: colors.text },
+    iconColor: colors.icon,
+    inputStyle: styles.inputBackground,
+    textColor: colors.text,
+    placeholderTextColor: colors.placeholder
   };
 
   const inputFields = [
     {
-      label: "Current Password",
+      ...baseInputProps,
+      label: t("change-password.currentPassword"),
       value: currentPassword,
-      onChangeText: setCurrentPassword,
-      secureTextEntry: true,
-      icon: "lock",
+      onChangeText: (text: string) => {
+        setCurrentPassword(text);
+        setError("");
+      }
     },
     {
-      label: "New Password",
+      ...baseInputProps,
+      label: t("change-password.newPassword"),
       value: newPassword,
-      onChangeText: setNewPassword,
-      secureTextEntry: true,
-      icon: "lock",
+      onChangeText: (text: string) => {
+        setNewPassword(text);
+        setError("");
+      }
     },
     {
-      label: "Confirm New Password",
+      ...baseInputProps,
+      label: t("change-password.confirmPassword"),
       value: confirmPassword,
-      onChangeText: setConfirmPassword,
-      secureTextEntry: true,
-      icon: "lock",
-    },
+      onChangeText: (text: string) => {
+        setConfirmPassword(text);
+        setError("");
+      }
+    }
   ];
 
   return (
-    <Form>
+    <Form style={styles.container}>
       <FormHeader>
-        <Text style={styles.headerTitle}>Cambiar contraseña</Text>
+        <Text style={styles.headerTitle}>
+          {t('change-password.changePassword')}
+        </Text>
       </FormHeader>
 
       <FormContent>
         <FormInputs inputs={inputFields} />
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
       </FormContent>
+
       <FormFooter>
         <Button
-          label="Change Password"
+          label={t('change-password.changeButton')}
           onPress={handleChangePassword}
-          style={styles.button}
+          style={[styles.button, { backgroundColor: colors.primary }]}
+          labelStyle={{ color: colors.buttonText }}
         />
       </FormFooter>
     </Form>
   );
 };
-
-const styles = StyleSheet.create({
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000",
-    textAlign: "center",
-    marginBottom: 16,
-  },
-  button: {
-    marginTop: 16,
-  },
-});
-
 export default ChangePasswordScreen;

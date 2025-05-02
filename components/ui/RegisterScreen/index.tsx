@@ -9,6 +9,9 @@ import Button from "../Button";
 import Text from "../Text";
 import IconButton from "../IconButton";
 import { router } from "expo-router";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
 
 const RegisterScreen: React.FC = () => {
   const [firstName, setFirstName] = useState("");
@@ -16,6 +19,9 @@ const RegisterScreen: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
 
   const handleRegister = () => {
     console.log("Register attempt with:", { firstName, lastName, email, password });
@@ -25,12 +31,35 @@ const RegisterScreen: React.FC = () => {
     router.push("/(auth)/login");
   };
 
+  const dynamicStyles = StyleSheet.create({
+    headerTitle: {
+      fontSize: 36,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 20,
+    },
+    backToLogin: {
+      color: colors.secondaryText,
+      fontSize: 16,
+      textDecorationLine: "underline",
+      marginTop: 16,
+      textAlign: "center",
+    },
+    registerButton: {
+      marginTop: 16,
+    },
+    backButtonContainer: {
+      alignItems: "flex-end",
+      marginBottom: 10,
+    }
+  });
+
   const inputFields = [
-    { label: "First name", value: firstName, onChangeText: setFirstName, icon: "account" },
-    { label: "Last name", value: lastName, onChangeText: setLastName, icon: "account" },
-    { label: "Email", value: email, onChangeText: setEmail, icon: "email" },
+    { label: t("register.firstName"), value: firstName, onChangeText: setFirstName, icon: "account" },
+    { label: t("register.lastName"), value: lastName, onChangeText: setLastName, icon: "account" },
+    { label: t("register.email"), value: email, onChangeText: setEmail, icon: "email" },
     {
-      label: "Password",
+      label: t("register.password"),
       value: password,
       onChangeText: setPassword,
       secureTextEntry: secureTextEntry,
@@ -40,50 +69,27 @@ const RegisterScreen: React.FC = () => {
 
   return (
     <Form>
-      <View style={styles.backButtonContainer}>
+      <View style={dynamicStyles.backButtonContainer}>
         <IconButton icon="arrow-left" onPress={handleBack} />
       </View>
       <FormHeader>
-        <Text style={styles.headerTitle}>Sign up</Text>
+        <Text style={dynamicStyles.headerTitle}>{t("register.title")}</Text>
       </FormHeader>
       <FormContent>
         <FormInputs inputs={inputFields} />
       </FormContent>
       <FormFooter>
         <Button 
-          label="Create account" 
+          label={t("register.createAccount")} 
           onPress={handleRegister} 
-          style={styles.registerButton} 
+          style={dynamicStyles.registerButton} 
         />
         <TouchableOpacity onPress={handleBack}>
-          <Text style={styles.backToLogin}>Already have an account? Log in</Text>
+          <Text style={dynamicStyles.backToLogin}>{t("register.haveAccount")}</Text>
         </TouchableOpacity>
       </FormFooter>
     </Form>
   );
 };
-
-const styles = StyleSheet.create({
-  headerTitle: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: "#000",
-    marginBottom: 20,
-  },
-  registerButton: {
-    marginTop: 16,
-  },
-  backToLogin: {
-    color: "#666",
-    fontSize: 16,
-    textDecorationLine: "underline",
-    marginTop: 16,
-    textAlign: "center",
-  },
-  backButtonContainer: {
-    alignItems: "flex-end",
-    marginBottom: 10,
-  }
-});
 
 export default RegisterScreen;

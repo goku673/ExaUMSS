@@ -1,70 +1,86 @@
-import React, { useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import { Modal as PaperModal, Portal, Text, IconButton } from "react-native-paper";
+import React from "react";
+import { Modal as RNModal, View, StyleSheet, TouchableOpacity } from "react-native";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import Text from "@/components/ui/Text";
+import { StyleProp, ViewStyle } from "react-native";
 
 interface ModalProps {
   visible: boolean;
   onDismiss: () => void;
-  title: string;
   children: React.ReactNode;
+  title?: string;
+  animationType?: "none" | "slide" | "fade";
+  contentStyle?: StyleProp<ViewStyle>;
 }
 
-const Modal: React.FC<ModalProps> = ({ visible, onDismiss, title, children }) => {
-  
+const Modal: React.FC<ModalProps> = ({
+  visible,
+  onDismiss,
+  children,
+  title,
+  animationType = "fade",
+  contentStyle,
+}) => {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+
+  const styles = StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: colors.background || "rgba(0,0,0,0.6)",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    modalContent: {
+      width: "85%",
+      maxWidth: 400,
+      borderRadius: 12,
+      padding: 24,
+      backgroundColor: colors.cardBackground,
+      shadowColor: colors.shadow,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 6,
+      elevation: 8,
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: "600",
+      marginBottom: 16,
+      color: colors.text,
+      textAlign: "center",
+    },
+    closeButton: {
+      position: "absolute",
+      top: 16,
+      right: 16,
+      zIndex: 1,
+    },
+  });
 
   return (
-    <Portal>
-      <PaperModal
-        visible={visible}
-        onDismiss={onDismiss}
-        contentContainerStyle={styles.modalContainer}
+    <RNModal
+      transparent
+      visible={visible}
+      animationType={animationType}
+      onRequestClose={onDismiss}
+    >
+      <TouchableOpacity 
+        style={styles.overlay} 
+        activeOpacity={1} 
+        onPress={onDismiss}
       >
-                <View style={styles.header}>
-                <IconButton
-                    icon="close"
-                    size={24}
-                    onPress={onDismiss}
-                    style={styles.closeIcon}
-                />
-                   
+        <View 
+          style={[styles.modalContent, contentStyle]}
+          onStartShouldSetResponder={() => true}
+        >
+          {title && <Text style={styles.title}>{title}</Text>}
+          {children}
         </View>
-        <ScrollView style={styles.scrollView}>{children}</ScrollView>
-      </PaperModal>
-    </Portal>
+      </TouchableOpacity>
+    </RNModal>
   );
 };
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "white",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    overflow: "hidden",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-  },
-  closeIcon: {
-    marginRight: 16, 
-    borderRadius: 16,
-    
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-    padding: 16,
-  },
-  
-});
 
 export default Modal;

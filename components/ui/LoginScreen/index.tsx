@@ -12,19 +12,23 @@ import Text from "../Text"
 import Button from "../Button"
 import IconButton from "../IconButton"
 import { router } from "expo-router"
+import { useTheme } from "@/components/ui/ThemeContext"
+import { getThemeColors } from "@/components/theme"
+import { useTranslation } from "react-i18next"
 
 const LoginScreen: React.FC = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const { theme } = useTheme()
+  const colors = getThemeColors(theme)
+  const { t } = useTranslation()
 
   const handleLogin = () => {
-    router.push("/(tabs)/landing");
-    
+    router.push("/(tabs)/landing")
   }
 
   const handleForgotPassword = () => {
     console.log("Forgot password")
-    
   }
 
   const handleCreateAccount = () => {
@@ -33,20 +37,47 @@ const LoginScreen: React.FC = () => {
 
   const handleBack = () => {
     console.log("Go back")
-    
   }
 
- 
+  const dynamicStyles = StyleSheet.create({
+    backButtonContainer: {
+      alignItems: "flex-end",
+      marginBottom: 10,
+    },
+    headerTitle: {
+      fontSize: 36,
+      fontWeight: "bold",
+      color: colors.text,
+      alignItems: "center",
+    },
+    forgotPassword: {
+      color: colors.secondaryText,
+      fontSize: 16,
+      textDecorationLine: "underline",
+      marginBottom: 24,
+    },
+    loginButton: {
+      backgroundColor: colors.primary,
+      paddingVertical: 12,
+    },
+    createAccount: {
+      color: colors.secondaryText,
+      fontSize: 16,
+      textDecorationLine: "underline",
+      marginBottom: 8,
+    },
+  })
+
   const inputFields = [
     {
-      label: "username",
+      label: t("login.username"),
       value: username,
       onChangeText: setUsername,
       secureTextEntry: false,
       icon: "account",
     },
     {
-      label: "Password",
+      label: t("login.password"),
       value: password,
       onChangeText: setPassword,
       secureTextEntry: true,
@@ -56,58 +87,31 @@ const LoginScreen: React.FC = () => {
 
   return (
     <Form>
-  
       <FormHeader>
-        <Text style={styles.headerTitle}>Bienbenido a ExaUMSS</Text>
+        <Text style={dynamicStyles.headerTitle}>{t("login.welcome")}</Text>
       </FormHeader>
 
       <FormContent>
         <FormInputs inputs={inputFields} />
 
         <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.forgotPassword}>Olvidaste tu correo?</Text>
+          <Text style={dynamicStyles.forgotPassword}>{t("login.forgotPassword")}</Text>
         </TouchableOpacity>
 
-        <Button label="Ingresar" onPress={handleLogin} style={styles.loginButton} />
+        <Button 
+          label={t("login.signIn")} 
+          onPress={handleLogin} 
+          style={dynamicStyles.loginButton} 
+        />
       </FormContent>
 
       <FormFooter>
-        <TouchableOpacity onPress={handleCreateAccount} >
-          <Text style={styles.createAccount}>No tienes cuenta?</Text>
+        <TouchableOpacity onPress={handleCreateAccount}>
+          <Text style={dynamicStyles.createAccount}>{t("login.noAccount")}</Text>
         </TouchableOpacity>
       </FormFooter>
     </Form>
   )
 }
-
-const styles = StyleSheet.create({
-  backButtonContainer: {
-    alignItems: "flex-end",
-    marginBottom: 10,
-  },
-  headerTitle: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: "#000000",
-    alignItems: "center",
-  },
-  forgotPassword: {
-    color: "#666666",
-    fontSize: 16,
-    textDecorationLine: "underline",
-    marginBottom: 24,
-  },
-  loginButton: {
-    backgroundColor: "#007BFF",
-    paddingVertical: 12,
-  },
-  createAccount: {
-    color: "#666666",
-    fontSize: 16,
-    textDecorationLine: "underline",
-    marginBottom: 8,
-    
-  },
-})
 
 export default LoginScreen

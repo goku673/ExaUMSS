@@ -2,7 +2,6 @@ import React from "react";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import LoginScreen from "@/components/ui/LoginScreen";
 
-// refactorizar  theme
 const theme = {
   ...DefaultTheme,
   colors: {

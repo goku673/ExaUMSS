@@ -6,7 +6,7 @@ interface FormContentProps {
 }
 
 const FormContent: React.FC<FormContentProps> = ({ children }) => (
-    <View style={styles.content}>{children}</View>
+  <View style={styles.content}>{children}</View>
 );
 
 const styles = StyleSheet.create({
@@ -16,3 +16,4 @@ const styles = StyleSheet.create({
 });
 
 export default FormContent;
+

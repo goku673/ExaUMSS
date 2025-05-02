@@ -1,6 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
 
 interface InputField {
   label: string;
@@ -15,6 +17,19 @@ interface FormInputsProps {
 }
 
 const FormInputs: React.FC<FormInputsProps> = ({ inputs }) => {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+
+  const styles = StyleSheet.create({
+    container: {
+      padding: 16,
+    },
+    input: {
+      marginBottom: 16,
+      backgroundColor: colors.inputBackground,
+    },
+  });
+
   return (
     <View style={styles.container}>
       {inputs.map((input, index) => (
@@ -26,20 +41,19 @@ const FormInputs: React.FC<FormInputsProps> = ({ inputs }) => {
           secureTextEntry={input.secureTextEntry}
           mode="outlined"
           style={styles.input}
-          right={<TextInput.Icon icon={input.icon} />}
+          right={<TextInput.Icon icon={input.icon} color={colors.text} />}
+          theme={{
+            colors: {
+              text: colors.text,
+              placeholder: colors.placeholder,
+              primary: colors.primary,
+              background: colors.inputBackground,
+            },
+          }}
         />
       ))}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-  },
-  input: {
-    marginBottom: 16,
-  },
-});
 
 export default FormInputs;

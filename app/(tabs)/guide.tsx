@@ -1,107 +1,120 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
-// reafactorizar todo 
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
+import Text from "@/components/ui/Text";
+
 export default function GuideScreen() {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: colors.background,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 10,
+      textAlign: "center",
+    },
+    subtitle: {
+      fontSize: 16,
+      color: colors.textSecondary,
+      marginBottom: 16,
+      textAlign: "center",
+    },
+    stepContainer: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+      marginBottom: 12,
+      backgroundColor: colors.cardBackground,
+      padding: 16,
+      borderRadius: 8,
+    },
+    stepNumber: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: colors.primary,
+      marginRight: 12,
+      minWidth: 24,
+    },
+    stepText: {
+      fontSize: 16,
+      color: colors.text,
+      flex: 1,
+      lineHeight: 24,
+    },
+    videoContainer: {
+      marginVertical: 16,
+      borderRadius: 12,
+      overflow: "hidden",
+      backgroundColor: colors.cardBackground,
+      elevation: 2,
+      shadowColor: colors.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+    },
+    footer: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      marginTop: 14,
+      textAlign: "center",
+      paddingHorizontal: 20,
+    },
+    section: {
+      marginBottom: 24,
+    },
+  });
+
+  const guideSteps = [
+    t('guide.description1'),
+    t('guide.description2'),
+    t('guide.description3'),
+    t('guide.description4'),
+    t('guide.description5'),
+  ];
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Guía de Usuario</Text>
-      <Text style={styles.subtitle}>Sigue estos pasos para comenzar:</Text>
-
-      <View style={styles.stepContainer}>
-        <Text style={styles.stepNumber}>1.</Text>
-        <Text style={styles.stepText}>
-          Abre la aplicación e inicia sesión con tus credenciales.
-        </Text>
+    <ScrollView 
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.section}>
+        <Text style={styles.title}>{t('guide.title')}</Text>
+        <Text style={styles.subtitle}>{t('guide.description0')}</Text>
       </View>
 
-      <View style={styles.stepContainer}>
-        <Text style={styles.stepNumber}>2.</Text>
-        <Text style={styles.stepText}>
-          Navega a través de las pestañas para explorar diferentes secciones como Facultades, Perfil y Configuración.
-        </Text>
+      <View style={styles.section}>
+        {guideSteps.map((step, index) => (
+          <View key={`step-${index}`} style={styles.stepContainer}>
+            <Text style={styles.stepNumber}>{index + 1}.</Text>
+            <Text style={styles.stepText}>{step}</Text>
+          </View>
+        ))}
       </View>
 
-      <View style={styles.stepContainer}>
-        <Text style={styles.stepNumber}>3.</Text>
-        <Text style={styles.stepText}>
-          Usa la pestaña de Facultades para acceder a recursos relacionados con tu facultad.
-        </Text>
-      </View>
-
-      <View style={styles.stepContainer}>
-        <Text style={styles.stepNumber}>4.</Text>
-        <Text style={styles.stepText}>
-          Actualiza la información de tu perfil en la pestaña Perfil.
-        </Text>
-      </View>
-
-      <View style={styles.stepContainer}>
-        <Text style={styles.stepNumber}>5.</Text>
-        <Text style={styles.stepText}>
-          Ajusta tus preferencias en la pestaña Configuración.
-        </Text>
-      </View>
-
-      <Text style={styles.subtitle}>Video de ayuda:</Text>
-      <View style={styles.videoContainer}>
-        <YoutubePlayer
-          height={200}
-          play={false}
-          videoId="HJS39OsYEN8" 
-        />
+      <View style={styles.section}>
+        <Text style={styles.subtitle}>{t('guide.helpVideo')}</Text>
+        <View style={styles.videoContainer}>
+          <YoutubePlayer
+            height={200}
+            play={false}
+            videoId="HJS39OsYEN8"
+          />
+        </View>
       </View>
 
       <Text style={styles.footer}>
-        Para más información, contacta con soporte.
+        {t('guide.description6')}
       </Text>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: "#F8F8F8",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 16,
-    textAlign: "center",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-    marginBottom: 16,
-    textAlign: "center",
-  },
-  stepContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    marginBottom: 12,
-  },
-  stepNumber: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#6200EE",
-    marginRight: 8,
-  },
-  stepText: {
-    fontSize: 16,
-    color: "#333",
-    flex: 1,
-  },
-  videoContainer: {
-    marginBottom: 16,
-    borderRadius: 8,
-    overflow: "hidden",
-  },
-  footer: {
-    fontSize: 14,
-    color: "#666",
-    marginTop: 24,
-    textAlign: "center",
-  },
-});

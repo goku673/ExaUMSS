@@ -1,44 +1,39 @@
+// SettingItem.tsx
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import Text from "./Text";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
 
 interface SettingItemProps {
   title: string;
-  description?: string;
   onPress: () => void;
 }
 
-const SettingItem: React.FC<SettingItemProps> = ({ title, description, onPress }) => (
-  <TouchableOpacity style={styles.itemContainer} onPress={onPress}>
-    <View style={styles.textContainer}>
-      <Text style={styles.itemTitle}>{title}</Text>
-      {description && <Text style={styles.itemDescription}>{description}</Text>}
-    </View>
-    <Ionicons name="chevron-forward" size={20} color="#000" />
-  </TouchableOpacity>
-);
+const SettingItem: React.FC<SettingItemProps> = ({ title, onPress }) => {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.container}>
+      <View style={styles.content}>
+        <Text style={[styles.title, { color: colors.text }]}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
-  itemContainer: {
+  container: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  content: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
   },
-  textContainer: {
-    flex: 1,
-  },
-  itemTitle: {
+  title: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
-  },
-  itemDescription: {
-    fontSize: 14,
-    color: "#666",
   },
 });
 

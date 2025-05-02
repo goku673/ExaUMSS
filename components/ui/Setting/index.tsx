@@ -1,95 +1,123 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 import SettingItem from "../SettingItem";
 import Title from "../Title";
 import Text from "../Text";
-import { useRouter } from "expo-router";
 import SelectorModal from "@/components/SelectorModal";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
+
+type Language = "Español" | "Inglés";
+type AppTheme = "Claro" | "Oscuro";
+
+const convertTheme = (theme: AppTheme): 'light' | 'dark' => {
+  return theme === "Oscuro" ? 'dark' : 'light';
+};
 
 const SettingsScreen: React.FC = () => {
   const router = useRouter();
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const [themeModalVisible, setThemeModalVisible] = useState(false);
-  const [language, setLanguage] = useState("Español");
-  const [theme, setTheme] = useState("Claro");
+  const { theme, setTheme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t, i18n } = useTranslation();
+  
+  const dynamicStyles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          paddingTop: 40,
+          flex: 1,
+          backgroundColor: colors.background,
+          padding: 16,
+        },
+        title: {
+          fontSize: 32,
+          fontWeight: "bold",
+          textAlign: "center",
+          marginBottom: 24,
+          color: colors.text,
+        },
+        sectionTitle: {
+          fontSize: 18,
+          fontWeight: "600",
+          color: colors.textSecondary,
+          marginTop: 24,
+          marginBottom: 12,
+          textTransform: "uppercase",
+        },
+      }),
+    [colors]
+  );
+
+  // Manejar cambio de idioma
+  const handleLanguageChange = (selectedLanguage: string) => {
+    if (selectedLanguage === "Español" || selectedLanguage === "Inglés") {
+      i18n.changeLanguage(selectedLanguage === "Español" ? "es" : "en");
+    }
+    setLanguageModalVisible(false);
+  };
+
+  // Manejar cambio de tema
+  const handleThemeChange = (selectedTheme: string) => {
+    if (selectedTheme === "Claro" || selectedTheme === "Oscuro") {
+      setTheme(selectedTheme as AppTheme);
+    }
+    setThemeModalVisible(false);
+  };
 
   return (
-    <View style={styles.container}>
-      <Title style={styles.title}>Configuración</Title>
+    <View style={dynamicStyles.container}>
+      <Title style={dynamicStyles.title}>{t("setting.settings")}</Title>
 
       {/* Sección de Cuenta */}
-      <Text style={styles.sectionTitle}>Cuenta</Text>
+      <Text style={dynamicStyles.sectionTitle}>{t("setting.account")}</Text>
       <SettingItem
-        title="Cambiar contraseña"
+        title={t("setting.changePassword")}
         onPress={() => router.push("/change-password")}
       />
 
       {/* Sección de Notificaciones */}
-      <Text style={styles.sectionTitle}>Notificaciones</Text>
+      <Text style={dynamicStyles.sectionTitle}>{t("setting.notifications")}</Text>
       <SettingItem
-        title="Gestionar notificaciones"
+        title={t("setting.manageNotifications")}
         onPress={() => router.push("/notifications")}
       />
 
       {/* Sección de Idioma */}
-      <Text style={styles.sectionTitle}>Idioma</Text>
-      <SettingItem
-        title={language}
+      <Text style={dynamicStyles.sectionTitle}>{t("setting.language")}</Text>
+      <SettingItem 
+        title={t("setting.language")}
         onPress={() => setLanguageModalVisible(true)}
       />
 
       {/* Sección de Tema */}
-      <Text style={styles.sectionTitle}>Tema</Text>
+      <Text style={dynamicStyles.sectionTitle}>{t("setting.theme")}</Text>
       <SettingItem
-        title={theme}
+        title={t(`setting.${theme.toLowerCase()}`)}
         onPress={() => setThemeModalVisible(true)}
       />
 
       {/* Modales */}
       <SelectorModal
         visible={languageModalVisible}
-        title="Seleccionar Idioma"
-        options={["Español", "Inglés"]}
-        onSelect={(selectedLanguage) => {
-          setLanguage(selectedLanguage);
-          setLanguageModalVisible(false);
-        }}
+        title={t("setting.selectLanguage")}
+        options={[t("setting.spanish"), t("setting.english")]}
+        onSelect={handleLanguageChange}
         onClose={() => setLanguageModalVisible(false)}
       />
+      
       <SelectorModal
         visible={themeModalVisible}
-        title="Seleccionar Tema"
-        options={["Claro", "Oscuro"]}
-        onSelect={(selectedTheme) => {
-          setTheme(selectedTheme);
-          setThemeModalVisible(false);
-        }}
+        title={t("setting.selectTheme")}
+        options={[t("setting.light"), t("setting.dark")]}
+        onSelect={handleThemeChange}
         onClose={() => setThemeModalVisible(false)}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 16,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 24,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#444",
-    marginTop: 24,
-    marginBottom: 12, 
-    textTransform: "uppercase",
-  },
-});
 
 export default SettingsScreen;
