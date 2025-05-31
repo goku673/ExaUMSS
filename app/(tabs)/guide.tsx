@@ -1,121 +1,229 @@
-import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import YoutubePlayer from "react-native-youtube-iframe";
-import { useTheme } from "@/components/ui/ThemeContext";
-import { getThemeColors } from "@/components/theme";
-import { useTranslation } from "react-i18next";
-import Text from "@/components/ui/Text";
+"use client"
+import { View, StyleSheet, ScrollView, SafeAreaView } from "react-native"
+import YoutubePlayer from "react-native-youtube-iframe"
+import { useTheme } from "@/components/ui/ThemeContext"
+import { getThemeColors } from "@/components/theme"
+import { useTranslation } from "react-i18next"
+import Text from "@/components/ui/Text"
+import { Ionicons } from "@expo/vector-icons"
 
 export default function GuideScreen() {
-  const { theme } = useTheme();
-  const colors = getThemeColors(theme);
-  const { t } = useTranslation();
+  const { theme } = useTheme()
+  const colors = getThemeColors(theme)
+  const { t } = useTranslation()
 
   const styles = StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
     container: {
       flex: 1,
-      padding: 20,
       backgroundColor: colors.background,
-      paddingTop: 44,
+    },
+    scrollContent: {
+      paddingBottom: 32,
+    },
+    headerContainer: {
+      paddingHorizontal: 20,
+      paddingVertical: 24,
+      backgroundColor: colors.cardBackground,
+      marginHorizontal: 20,
+      marginTop: 20,
+      borderRadius: 20,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 6,
+      borderWidth: 1,
+      borderColor: colors.border,
     },
     title: {
-      fontSize: 24,
-      fontWeight: "bold",
+      fontSize: 28,
+      fontWeight: "700",
       color: colors.text,
-      marginBottom: 10,
+      marginBottom: 12,
       textAlign: "center",
     },
     subtitle: {
       fontSize: 16,
-      color: colors.textSecondary,
-      marginBottom: 10,
+      color: colors.secondaryText,
       textAlign: "center",
+      lineHeight: 24,
     },
-    stepContainer: {
+    stepsSection: {
+      marginHorizontal: 20,
+      marginTop: 24,
+    },
+    sectionTitle: {
+      fontSize: 20,
+      fontWeight: "700",
+      color: colors.text,
+      marginBottom: 16,
       flexDirection: "row",
-      alignItems: "flex-start",
-      marginBottom: 12,
+      alignItems: "center",
+    },
+    stepCard: {
       backgroundColor: colors.cardBackground,
-      padding: 0,
-      borderRadius: 8,
+      borderRadius: 16,
+      padding: 20,
+      marginBottom: 12,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.08,
+      shadowRadius: 8,
+      elevation: 4,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    stepHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 8,
     },
     stepNumber: {
-      fontSize: 18,
-      fontWeight: "bold",
-      color: colors.primary,
-      marginRight: 12,
-      minWidth: 20,
+      backgroundColor: colors.primary,
+      borderRadius: 20,
+      width: 32,
+      height: 32,
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 16,
+    },
+    stepNumberText: {
+      fontSize: 14,
+      fontWeight: "700",
+      color: "#ffffff",
+    },
+    stepContent: {
+      flex: 1,
     },
     stepText: {
       fontSize: 16,
       color: colors.text,
-      flex: 1,
-      lineHeight: 20,
+      lineHeight: 24,
+      fontWeight: "500",
+    },
+    videoSection: {
+      marginHorizontal: 20,
+      marginTop: 32,
+    },
+    videoCard: {
+      backgroundColor: colors.cardBackground,
+      borderRadius: 20,
+      padding: 20,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 6,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    videoTitle: {
+      fontSize: 18,
+      fontWeight: "700",
+      color: colors.text,
+      marginBottom: 16,
+      textAlign: "center",
+      flexDirection: "row",
+      alignItems: "center",
     },
     videoContainer: {
-      marginVertical: 16,
-      borderRadius: 12,
+      borderRadius: 16,
       overflow: "hidden",
-      backgroundColor: colors.cardBackground,
-      elevation: 2,
-      shadowColor: colors.shadow,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
+      backgroundColor: "#000",
     },
-    footer: {
+    footerContainer: {
+      marginHorizontal: 20,
+      marginTop: 24,
+      backgroundColor: colors.primary + "15",
+      borderRadius: 16,
+      padding: 20,
+      borderWidth: 1,
+      borderColor: colors.primary + "30",
+    },
+    footerText: {
       fontSize: 14,
-      color: colors.textSecondary,
-      marginTop: -18,
+      color: colors.primary,
       textAlign: "center",
-      paddingHorizontal: 20,
+      lineHeight: 22,
+      fontWeight: "500",
     },
-    section: {
-      marginBottom: 24,
+    iconContainer: {
+      backgroundColor: colors.primary + "20",
+      borderRadius: 12,
+      width: 40,
+      height: 40,
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 12,
     },
-  });
+  })
 
   const guideSteps = [
-    t('guide.description1'),
-    t('guide.description2'),
-    t('guide.description3'),
-    t('guide.description4'),
-    t('guide.description5'),
-  ];
+    t("guide.description1"),
+    t("guide.description2"),
+    t("guide.description3"),
+    t("guide.description4"),
+    t("guide.description5"),
+  ]
 
   return (
-    <ScrollView 
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.section}>
-        <Text style={styles.title}>{t('guide.title')}</Text>
-        <Text style={styles.subtitle}>{t('guide.description0')}</Text>
-      </View>
-
-      <View style={styles.section}>
-        {guideSteps.map((step, index) => (
-          <View key={`step-${index}`} style={styles.stepContainer}>
-            <Text style={styles.stepNumber}>{index + 1}.</Text>
-            <Text style={styles.stepText}>{step}</Text>
-          </View>
-        ))}
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.subtitle}>{t('guide.Help video')}</Text>
-        <View style={styles.videoContainer}>
-          <YoutubePlayer
-            height={200}
-            play={false}
-            videoId="HJS39OsYEN8"
-          />
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>{t("guide.title")}</Text>
+          <Text style={styles.subtitle}>{t("guide.description0")}</Text>
         </View>
-      </View>
 
-      <Text style={styles.footer}>
-        {t('guide.description6')}
-      </Text>
-    </ScrollView>
-  );
+        {/* Steps Section */}
+        <View style={styles.stepsSection}>
+          <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+            <View style={styles.iconContainer}>
+              <Ionicons name="list-outline" size={20} color={colors.primary} />
+            </View>
+            <Text style={styles.sectionTitle}>Pasos a seguir</Text>
+          </View>
+
+          {guideSteps.map((step, index) => (
+            <View key={`step-${index}`} style={styles.stepCard}>
+              <View style={styles.stepHeader}>
+                <View style={styles.stepNumber}>
+                  <Text style={styles.stepNumberText}>{index + 1}</Text>
+                </View>
+                <View style={styles.stepContent}>
+                  <Text style={styles.stepText}>{step}</Text>
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
+
+        {/* Video Section */}
+        <View style={styles.videoSection}>
+          <View style={styles.videoCard}>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+              <Ionicons name="play-circle" size={24} color={colors.primary} style={{ marginRight: 8 }} />
+              <Text style={styles.videoTitle}>{t("guide.Help video")}</Text>
+            </View>
+            <View style={styles.videoContainer}>
+              <YoutubePlayer height={220} play={false} videoId="HJS39OsYEN8" />
+            </View>
+          </View>
+        </View>
+
+        {/* Footer */}
+        <View style={styles.footerContainer}>
+          <Text style={styles.footerText}>{t("guide.description6")}</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  )
 }

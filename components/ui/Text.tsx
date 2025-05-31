@@ -5,13 +5,13 @@ import { getThemeColors } from "@/components/theme";
 
 interface TextProps {
   children: React.ReactNode;
-  style?: TextStyle | TextStyle[];
+  style?: TextStyle | TextStyle[] | null | undefined;
 }
 
 const Text: React.FC<TextProps> = ({ children, style }) => {
   const { theme } = useTheme();
   const colors = getThemeColors(theme);
-  
+
   const styles = StyleSheet.create({
     text: {
       fontSize: 16,
@@ -19,7 +19,14 @@ const Text: React.FC<TextProps> = ({ children, style }) => {
     },
   });
 
-  return <RNText style={[styles.text, style]}>{children}</RNText>;
+  // Normaliza y filtra estilos nulos/undefined
+  const normalizedStyle = style
+    ? Array.isArray(style)
+      ? [styles.text, ...style.filter(Boolean)]
+      : [styles.text, style]
+    : [styles.text];
+
+  return <RNText style={normalizedStyle}>{children}</RNText>;
 };
 
 export default Text;

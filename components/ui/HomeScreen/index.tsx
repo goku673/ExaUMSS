@@ -53,6 +53,10 @@ const HomeScreen: React.FC = () => {
       height: "100%",
       width: "100%",
     },
+    banner: {
+      marginTop: 16,
+      
+    }
   })
 
   const gradientColors: [string, string, ...string[]] = theme === "Claro" 
@@ -82,7 +86,10 @@ const HomeScreen: React.FC = () => {
             style={dynamicStyles.gradient} 
           />
         </View>
-        <Banner />
+        <View style={dynamicStyles.banner}>
+          <Banner />
+        </View>
+        
         <View style={dynamicStyles.contentWrapper}>
           <CardGrid />
         </View>
