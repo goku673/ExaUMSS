@@ -1,43 +1,84 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { Tabs } from "expo-router";
+import React from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
+import { useTranslation } from "react-i18next";
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+export default function TabsLayout() {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
+  const { t } = useTranslation();
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  // Asegúrate de que todas las traducciones devuelvan componentes válidos
+  const tabTitles = {
+    inicio: t('layout.inicio') || 'Inicio',
+    perfil: t('layout.perfil') || 'Perfil',
+    guia: t('layout.guia') || 'Guía',
+    practicas: t('layout.practicas') || 'Prácticas',
+    ajustes: t('layout.ajustes') || 'Ajustes'
+  };
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textSecondary,
+        tabBarStyle: { 
+          backgroundColor: colors.tabBarBackground,
+          borderTopColor: colors.border,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+          bottom: 4,
+        },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="landing"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+          title: tabTitles.inicio,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="profile"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" color={color} size={size} />
+          ),
+          title: tabTitles.perfil,
+        }}
+      />
+      <Tabs.Screen
+        name="guide"
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="book" color={color} size={size} />
+          ),
+          title: tabTitles.guia,
+        }}
+      />
+      <Tabs.Screen
+        name="practices"
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="archive" color={color} size={size} />
+          ),
+          title: tabTitles.practicas,
+        }}
+      />
+      <Tabs.Screen
+        name="settings" 
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings" color={color} size={size} />
+          ),
+          title: tabTitles.ajustes,
         }}
       />
     </Tabs>

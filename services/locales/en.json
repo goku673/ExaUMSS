@@ -1,0 +1,141 @@
+{
+    "setting": {
+      "settings": "Settings",
+      "account": "Account",
+      "notifications": "Notifications",
+      "language": "Language",
+      "theme": "Theme",
+      "changePassword": "Change Password",
+      "manageNotifications": "Manage Notifications",
+      "spanish": "Spanish",
+      "english": "English",
+      "light": "Light",
+      "dark": "Dark",
+      "selectLanguage": "Select Language",
+      "selectTheme": "Select Theme"
+    },
+    "editProfile": {
+      "title": "Edit Profile",
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "gender": "Gender",
+      "genderPlaceholder": "Enter your gender",
+      "age": "Age",
+      "agePlaceholder": "Enter your age",
+      "joinedDate": "Joined Date",
+      "joinedDatePlaceholder": "Enter joined date",
+      "saveButton": "Save Changes",
+      "toggleLanguage": "Switch Language"
+    },
+    "profile": {
+      "title": "Profile",
+      "edit": "Edit Profile",
+      "manageDownloads": "Manage Downloads",
+      "progress": "Progress",
+      "downloadHistory": "Download History",
+      "joined": "Joined in {{year}}",
+      "userInfo": "{{name}}, {{gender}}, age {{age}}",
+      "anatomy": "Anatomy",
+      "biology": "Biology",
+      "chemistry": "Chemistry",
+      "january": "January",
+      "december": "December",
+      "november": "November",
+      "Download": "Download",
+      "male": "Male",
+      "female": "female"
+    },
+    "Banner":{
+      "Welcome": "Welcome",
+      "Major University of San Simón": "Major University of San Simón"
+    },
+    "guide": {
+      "title": "Guide",
+      "description0": "Follow these steps to get started:",
+      "description1": "Open the application and log in.",
+      "description2": "Navigate through the tabs to explore different sections such as Faculties, Profile, and Settings.",
+      "description3": "Use the Faculties tab to access resources related to your faculty.",
+      "description4": "Update your profile information on the Profile tab.",
+      "description5": "Explore the app to discover more features and resources.",
+      "Help video": "Help video:",
+      "description6": "For more information, contact support"
+    },
+    "[fac]": {
+      "Entrance exams for": "Entrance exams for ",
+      "entranceExamsFor": "Entrance exams for {{faculty}}"
+    },
+    "change-password" :{
+      "Change password": "Change password",
+      "contraseñaActual": "Current password",
+      "nuevaContraseña": "New password",
+      "confirmarContraseña": "Confirm password",
+      "buttonChangePasword": "Change password",
+      "llenaloscampos": "Fill in all fields",
+      "contraseñaCorta": "The password is too short",
+      "cambioContraseña": "Password change successful"
+    },
+    "practice" :{
+      "Practice": "Practice",
+      "Select a subject to start": "Select a subject to start",
+      "Exams of": "Exams of ",
+      "exams available": "exams available",
+      "Calculus": "Calculus",
+      "Algebra": "Algebra",
+      "Biology": "Biology",
+      "History": "History",
+      "biology_exam_2022": "Biology Exam - 2022",
+      "Search subject": "Search subject..."
+    },
+    "notification": {
+      "title": "Notifications",
+      "newExam": "New exam available",
+      "newExamDesc": "Check the latest exam for your faculty",
+      "reminder": "Reminder",
+      "profileReminder": "Don't forget to complete your profile",
+      "update": "System update",
+      "systemUpdate": "The system will be updated tonight at 12:00 AM",
+      "empty": "No notifications yet"
+    },
+    "layout" :{
+      "inicio": "Home",
+      "perfil": "Profile",
+      "guia": "Guie",
+      "ajustes": "Settings",
+      "practicas": "Practices"
+    },
+    "cardGrig": {
+      "title": "Select your faculty",
+      "facultad": "Faculty",
+      "facultadContext": "Access the resources of each faculty",
+      "reciente": "Recent",
+      "recienteContext": "Access your recent resources",
+      "guia": "Guide",
+      "guiaContext": "Read the application guide"
+    },
+    "FacultyMat": {
+      "Download": "Download"
+    },
+    "login": {
+      "login": "Login",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "forgotPassword": "Forgot Password?",
+      "loginButton": "Login",
+      "registerButton": "Register",
+      "welcomeBack": "Welcome back!",
+      "welcomeMessage": "Please enter your credentials to continue.",
+      "rememberMe": "Remember me",
+      "noAccount": "Don't have an account?"
+    },
+    "register": {
+      "createAccount": "Create an account",
+      "name": "Name",
+      "apellido": "Last Name",
+      "email": "Email",
+      "confirmPassword": "Confirm Password",
+      "signUp": "Sign up",
+      "alreadyHaveAccount": "Already have an account?"
+    }
+  }
+  
