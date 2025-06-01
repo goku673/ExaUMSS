@@ -4,7 +4,7 @@ import { ThemeProvider, useTheme } from "@/components/ui/ThemeContext";
 import "@/services/i18n";
 import { Stack } from "expo-router";
 import { getThemeColors } from "@/components/theme";
-import { UserProvider } from "@/context/UserContext"; // <-- Corrige aquí
+import { UserProvider } from "@/context/UserContext";
 
 export default function RootLayout() {
   return (

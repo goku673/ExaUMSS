@@ -29,7 +29,7 @@ export default function GuideScreen() {
       paddingVertical: 24,
       backgroundColor: colors.cardBackground,
       marginHorizontal: 20,
-      marginTop: 20,
+      marginTop: 40,
       borderRadius: 20,
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 4 },
@@ -189,7 +189,7 @@ export default function GuideScreen() {
             <View style={styles.iconContainer}>
               <Ionicons name="list-outline" size={20} color={colors.primary} />
             </View>
-            <Text style={styles.sectionTitle}>Pasos a seguir</Text>
+            <Text style={styles.sectionTitle}>{t("guide.title2")}</Text>
           </View>
 
           {guideSteps.map((step, index) => (

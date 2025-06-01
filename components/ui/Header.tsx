@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 24,
     flex: 1,
-    minHeight: 60,
+    minHeight: 80,
   },
   logoContainer: {
     flexDirection: "row",

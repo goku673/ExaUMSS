@@ -16,7 +16,7 @@ import {
   Platform,
   Alert,
   Linking,
-  RefreshControl, // Agregar este import
+  RefreshControl,
 } from "react-native"
 import Text from "@/components/ui/Text"
 import { useTheme } from "@/components/ui/ThemeContext"
@@ -25,6 +25,7 @@ import { getAllMaterials } from "@/firebase/firebaseServices"
 import { WebView } from "react-native-webview"
 import { Ionicons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
+import { useTranslation } from "react-i18next"
 
 interface Material {
   id: string
@@ -42,6 +43,7 @@ const PracticeAllScreen: React.FC = () => {
   const router = useRouter()
   const { theme } = useTheme()
   const colors = getThemeColors(theme)
+  const { t } = useTranslation()
 
   const [materials, setMaterials] = useState<Material[]>([])
   const [filteredMaterials, setFilteredMaterials] = useState<Material[]>([])
@@ -287,7 +289,7 @@ const PracticeAllScreen: React.FC = () => {
             onPress={() => handleOpenMaterial(item.archivoUrl, item.tipo, item.nombre)}
           >
             <Ionicons name="eye-outline" size={16} color="#ffffff" style={{ marginRight: 4 }} />
-            <Text style={styles.cardButtonText}>Ver Material</Text>
+            <Text style={styles.cardButtonText}>{t("practice.seeMaterials")}</Text>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -307,7 +309,7 @@ const PracticeAllScreen: React.FC = () => {
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: 20,
-      paddingVertical: 16,
+      paddingVertical: 36,
       backgroundColor: colors.background,
       borderBottomWidth: 1,
       borderBottomColor: colors.border,
@@ -619,9 +621,9 @@ const PracticeAllScreen: React.FC = () => {
   })
 
   const filters = [
-    { id: "todos", label: "Todos", icon: "apps" },
+    { id: "todos", label: t("practice.allFiles"), icon: "apps" },
     { id: "pdf", label: "PDFs", icon: "document-text" },
-    { id: "imagen", label: "Imágenes", icon: "image" },
+    { id: "imagen", label: t("practice.images"), icon: "image" },
   ]
 
   if (loading) {
@@ -629,7 +631,7 @@ const PracticeAllScreen: React.FC = () => {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Cargando materiales...</Text>
+          <Text style={styles.loadingText}>{t("practice.MaterialsLoading")}</Text>
         </View>
       </SafeAreaView>
     )
@@ -638,7 +640,7 @@ const PracticeAllScreen: React.FC = () => {
   // Agregar un botón de refresh en el header
   const headerTitle = (
     <View style={{ flexDirection: "row", alignItems: "center", flex: 1 }}>
-      <Text style={styles.headerTitle}>Materiales de Estudio</Text>
+      <Text style={styles.headerTitle}>{t("practice.title")}</Text>
       <TouchableOpacity
         style={[styles.backButton, { marginLeft: "auto", marginRight: 0 }]}
         onPress={onRefresh}
@@ -672,7 +674,7 @@ const PracticeAllScreen: React.FC = () => {
               />
               <TextInput
                 style={styles.searchInput}
-                placeholder="Buscar por nombre, descripción o facultad..."
+                placeholder= {t("practice.Search subject")}
                 placeholderTextColor={colors.secondaryText}
                 value={searchText}
                 onChangeText={setSearchText}
@@ -716,7 +718,7 @@ const PracticeAllScreen: React.FC = () => {
               renderItem={renderItem}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ paddingBottom: 20 }}
-              extraData={forceUpdate} // Esto fuerza el re-render cuando cambia
+              extraData={forceUpdate}
               refreshControl={
                 <RefreshControl
                   refreshing={refreshing}
@@ -741,14 +743,14 @@ const PracticeAllScreen: React.FC = () => {
                       style={[styles.cardButton, { backgroundColor: colors.primary, marginTop: 16 }]}
                       onPress={() => setSearchText("")}
                     >
-                      <Text style={styles.cardButtonText}>Limpiar búsqueda</Text>
+                      <Text style={styles.cardButtonText}>{t("practice.clear")}</Text>
                     </TouchableOpacity>
                   )}
                   <TouchableOpacity
                     style={[styles.cardButton, { backgroundColor: colors.primary, marginTop: 16 }]}
                     onPress={onRefresh}
                   >
-                    <Text style={styles.cardButtonText}>Refrescar lista</Text>
+                    <Text style={styles.cardButtonText}>{t("practice.refresh")}</Text>
                   </TouchableOpacity>
                 </View>
               }
@@ -788,10 +790,9 @@ const PracticeAllScreen: React.FC = () => {
               {viewerError ? (
                 <View style={styles.errorContainer}>
                   <Ionicons name="alert-circle-outline" size={64} color="#ffffff" style={styles.errorIcon} />
-                  <Text style={styles.errorTitle}>No se pudo cargar el archivo</Text>
+                  <Text style={styles.errorTitle}>{t("practice.noMaterials")}</Text>
                   <Text style={styles.errorText}>
-                    El archivo no se puede visualizar en la aplicación. Puedes intentar descargarlo para verlo en otra
-                    aplicación.
+                    {t("practice.faileMaterial")}
                   </Text>
                   <TouchableOpacity
                     style={styles.retryButton}
@@ -800,10 +801,10 @@ const PracticeAllScreen: React.FC = () => {
                       setLoadingViewer(true)
                     }}
                   >
-                    <Text style={styles.retryButtonText}>Reintentar</Text>
+                    <Text style={styles.retryButtonText}>{t("practice.retry")}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.downloadButton} onPress={handleDownload}>
-                    <Text style={styles.downloadButtonText}>Descargar archivo</Text>
+                    <Text style={styles.downloadButtonText}>{t("practice.downloadFile")}</Text>
                   </TouchableOpacity>
                 </View>
               ) : selectedMaterial?.tipo === "pdf" ? (
@@ -836,7 +837,7 @@ const PracticeAllScreen: React.FC = () => {
               {loadingViewer && !viewerError && (
                 <View style={styles.viewerLoadingContainer}>
                   <ActivityIndicator size="large" color="#ffffff" />
-                  <Text style={{ color: "#ffffff", marginTop: 16, fontSize: 16 }}>Cargando archivo...</Text>
+                  <Text style={{ color: "#ffffff", marginTop: 16, fontSize: 16 }}>{t("practice.fileLoading")}</Text>
                 </View>
               )}
             </Animated.View>

@@ -11,22 +11,32 @@ import { getAuth,
         } from "firebase/auth";
 import { getFirestore, doc, updateDoc, collection, addDoc, getDoc, getDocs} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
   
 };
 
-
 const app = initializeApp(firebaseConfig);
 
-
+/*
 let analytics = null;
 if (typeof window !== 'undefined') {
   analytics = getAnalytics(app);
 }
+  */
 
+//un pequeño ajuste
+let analytics = null;
+if (typeof window !== 'undefined') {
+  isSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    } else {
+      console.log("Firebase Analytics no soportado en este entorno.");
+    }
+  });
+}
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);

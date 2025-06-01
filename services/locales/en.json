@@ -12,7 +12,10 @@
       "light": "Light",
       "dark": "Dark",
       "selectLanguage": "Select Language",
-      "selectTheme": "Select Theme"
+      "selectTheme": "Select Theme",
+      "personalization": "Personalization",
+      "configuration": "Configuration",
+      "configurationText": "Personalize your experience and manage your account from here"
     },
     "editProfile": {
       "title": "Edit Profile",
@@ -25,11 +28,14 @@
       "joinedDate": "Joined Date",
       "joinedDatePlaceholder": "Enter joined date",
       "saveButton": "Save Changes",
-      "toggleLanguage": "Switch Language"
+      "toggleLanguage": "Switch Language",
+      "editProfileText": "Update your personal information. Changes will be saved to your profile.",
+      "info": "Personal Information"
     },
     "profile": {
       "title": "Profile",
       "edit": "Edit Profile",
+      "edit2": "Update your personal information",
       "manageDownloads": "Manage Downloads",
       "progress": "Progress",
       "downloadHistory": "Download History",
@@ -43,7 +49,19 @@
       "november": "November",
       "Download": "Download",
       "male": "Male",
-      "female": "female"
+      "female": "female",
+      "name": "Name",
+      "lastNsme": "Last Name",
+      "email": "Email",
+      "registrationDate": "Registration Date",
+      "gender": "Gender",
+      "age": "Age",
+      "logout": "Logout",
+      "personalInfo": "Personal Information",
+      "manageFaculties": "Manage Faculties",
+      "manageFacultiesText": "Manage faculties and careers",
+      "manageMaterials": "Manage Materials",
+      "manageMaterialsText": "Manage materials and resources"
     },
     "Banner":{
       "Welcome": "Welcome",
@@ -51,6 +69,7 @@
     },
     "guide": {
       "title": "Guide",
+      "title2": "Steps to follow",
       "description0": "Follow these steps to get started:",
       "description1": "Open the application and log in.",
       "description2": "Navigate through the tabs to explore different sections such as Faculties, Profile, and Settings.",
@@ -62,7 +81,9 @@
     },
     "[fac]": {
       "Entrance exams for": "Entrance exams for ",
-      "entranceExamsFor": "Entrance exams for {{faculty}}"
+      "entranceExamsFor": "Entrance exams for {{faculty}}",
+      "materials": "Study materials organized by year",
+      "noMaterials": "No materials available for this faculty"
     },
     "change-password" :{
       "Change password": "Change password",
@@ -84,7 +105,19 @@
       "Biology": "Biology",
       "History": "History",
       "biology_exam_2022": "Biology Exam - 2022",
-      "Search subject": "Search subject..."
+      "Search subject": "Search by name or faculty...",
+      "MaterialsLoading": "Loading materials...",
+      "title": "Materials",
+      "clear": "Clear search",
+      "refresh": "Refresh list",
+      "noMaterials": "No materials found",
+      "faileMaterial": "Failed to load materials",
+      "retry": "Retry",
+      "downloadFile": "Download file",
+      "fileLoading": "Loading file...",
+      "seeMaterials": "See materials",
+      "images": "Images",
+      "allFiles": "All files"
     },
     "notification": {
       "title": "Notifications",
@@ -110,7 +143,14 @@
       "reciente": "Recent",
       "recienteContext": "Access your recent resources",
       "guia": "Guide",
-      "guiaContext": "Read the application guide"
+      "guiaContext": "Read the application guide",
+      "recourses": "Resources",
+      "loading": "Loading faculties...",
+      "selectAFaculty": "Select a faculty to view resources",
+      "noFaculties": "No faculties available",
+      "explore": "Explore",
+      "see": "See",
+      "read": "Read"
     },
     "FacultyMat": {
       "Download": "Download"
@@ -126,16 +166,40 @@
       "welcomeBack": "Welcome back!",
       "welcomeMessage": "Please enter your credentials to continue.",
       "rememberMe": "Remember me",
-      "noAccount": "Don't have an account?"
+      "noAccount": "Don't have an account?",
+      "loginWithGoogle": "Login with Google",
+      "error": "error",
+      "allFieldsRequired": "All fields are required"
     },
     "register": {
       "createAccount": "Create an account",
       "name": "Name",
       "apellido": "Last Name",
       "email": "Email",
+      "password": "Password",
       "confirmPassword": "Confirm Password",
       "signUp": "Sign up",
-      "alreadyHaveAccount": "Already have an account?"
+      "alreadyHaveAccount": "Already have an account?",
+      "error": "Error",
+      "allFieldsRequired": "All fields are required",
+      "success": "Registration successful",
+      "accountCreated": "Your account has been created successfully. You can now log in.",
+      "emailInUse": "This email is already in use."
+    },
+    "common": {
+      "ok": "OK"
+    },
+    "registerFaculty": {
+      "facultiesLoading": "Loading faculties...",
+      "managmentFaculties": "Manage Faculties",
+      "facultiesRegustering": "Registered Faculties",
+      "noFacultiesRegistered": "No faculties registered yet.",
+      "registerNewFaculty": "Register New Faculty",
+      "facultyName": "Faculty Name",
+      "facultyDescription": "Faculty Description",
+      "facultyImage": "Faculty Image",
+      "changeImage": "Change Image",
+      "selectImage": "Select Image"
     }
   }
   

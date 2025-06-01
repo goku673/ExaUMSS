@@ -88,7 +88,7 @@ const EditProfile: React.FC = () => {
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: 20,
-      paddingVertical: 16,
+      paddingVertical: 28,
       backgroundColor: colors.background,
       borderBottomWidth: 1,
       borderBottomColor: colors.border,
@@ -290,7 +290,7 @@ const EditProfile: React.FC = () => {
             {/* Info Card */}
             <View style={styles.infoCard}>
               <Text style={styles.infoText}>
-                Actualiza tu información personal. Los cambios se guardarán en tu perfil.
+                {t("editProfile.editProfileText")}
               </Text>
             </View>
 
@@ -298,7 +298,7 @@ const EditProfile: React.FC = () => {
             <View style={styles.formCard}>
               <Text style={styles.formTitle}>
                 <Ionicons name="create-outline" size={20} color={colors.primary} style={{ marginRight: 8 }} />
-                Información Personal
+                {t("editProfile.info")}
               </Text>
 
               {inputFields.map((field) => (

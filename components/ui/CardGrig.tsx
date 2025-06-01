@@ -78,9 +78,13 @@ const CardGrid: React.FC = () => {
   const handleCardPress = (title: string) => {
     if (title === t("cardGrig.facultad")) {
       setVisible(true)
+      console.log(`Card clicked: ${title}`)
     } else if (title === t("cardGrig.reciente")) {
       router.push("/(tabs)/guide")
-    } else {
+      console.log(`Card clicked: ${title}`)
+    } 
+      else {
+      router.push("/(tabs)/guide")
       console.log(`Card clicked: ${title}`)
     }
   }
@@ -320,28 +324,28 @@ const CardGrid: React.FC = () => {
       description: t("cardGrig.facultadContext"),
       icon: "school-outline",
       color: "#3b82f6",
-      action: "Explorar",
+      action: t("cardGrig.explore"),
     },
     {
       title: t("cardGrig.reciente"),
       description: t("cardGrig.recienteContext"),
       icon: "time-outline",
       color: "#10b981",
-      action: "Ver",
+      action: t("cardGrig.see"),
     },
     {
       title: t("cardGrig.guia"),
       description: t("cardGrig.guiaContext"),
       icon: "book-outline",
       color: "#f59e0b",
-      action: "Leer",
+      action: t("cardGrig.read"),
     },
   ]
 
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.sectionTitle}>Recursos Académicos</Text>
+        <Text style={styles.sectionTitle}>{t("cardGrig.recourses")}</Text>
 
         <View style={styles.cardsContainer}>
           {cardData.map((card, index) => (
@@ -398,7 +402,7 @@ const CardGrid: React.FC = () => {
 
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>{t("cardGrig.title")}</Text>
-              <Text style={styles.modalSubtitle}>Selecciona una facultad para explorar</Text>
+              <Text style={styles.modalSubtitle}>{t("cardGrig.selectAFaculty")}</Text>
 
               <TouchableOpacity style={styles.closeButton} onPress={hideModal} activeOpacity={0.7}>
                 <Ionicons name="close" size={20} color={colors.text} />
@@ -410,7 +414,7 @@ const CardGrid: React.FC = () => {
                 {loading ? (
                   <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color={colors.primary} />
-                    <Text style={styles.loadingText}>Cargando facultades...</Text>
+                    <Text style={styles.loadingText}>{t("cardGrig.loading")}</Text>
                   </View>
                 ) : facultades.length > 0 ? (
                   facultades.map((fac) => (
@@ -425,7 +429,7 @@ const CardGrid: React.FC = () => {
                 ) : (
                   <View style={styles.emptyContainer}>
                     <Ionicons name="school-outline" size={64} color={colors.secondaryText} />
-                    <Text style={styles.emptyText}>No hay facultades disponibles en este momento.</Text>
+                    <Text style={styles.emptyText}>{t("cardGrig.noFaculties")}</Text>
                   </View>
                 )}
               </View>

@@ -54,7 +54,7 @@ const HomeScreen: React.FC = () => {
       width: "100%",
     },
     banner: {
-      marginTop: 16,
+      marginTop: 25,
       
     }
   })

@@ -280,7 +280,7 @@ const FacultyScreen: React.FC = () => {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.emptyText}>Cargando materiales...</Text>
+          <Text style={styles.emptyText}>{t("practice.MaterialsLoading")}</Text>
         </View>
       </SafeAreaView>
     )
@@ -295,7 +295,7 @@ const FacultyScreen: React.FC = () => {
 
         <View style={styles.headerContainer}>
           <Text style={styles.header}>{t("[fac].entranceExamsFor", { faculty: facultyName })}</Text>
-          <Text style={styles.subtitle}>Materiales de estudio organizados por año</Text>
+          <Text style={styles.subtitle}>{t("[fac].materials")}</Text>
         </View>
 
         <View style={styles.contentContainer}>
@@ -309,7 +309,7 @@ const FacultyScreen: React.FC = () => {
             ListEmptyComponent={
               <View style={styles.emptyContainer}>
                 <Ionicons name="document-outline" size={64} color={colors.secondaryText} />
-                <Text style={styles.emptyText}>No hay materiales registrados para esta facultad.</Text>
+                <Text style={styles.emptyText}>{t("[fac].noMaterials")}</Text>
               </View>
             }
           />

@@ -22,6 +22,7 @@ import { Ionicons } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
 import { useTheme } from "@/components/ui/ThemeContext"
 import { getThemeColors } from "@/components/theme"
+import { useTranslation } from "react-i18next"
 
 const storage = getStorage()
 
@@ -43,6 +44,7 @@ const RegisterFaculty: React.FC = () => {
   const router = useRouter()
   const { theme } = useTheme()
   const colors = getThemeColors(theme)
+  const { t } = useTranslation()
 
   useEffect(() => {
     fetchFacultades()
@@ -122,7 +124,7 @@ const RegisterFaculty: React.FC = () => {
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: 20,
-      paddingVertical: 16,
+      paddingVertical: 26,
       backgroundColor: colors.background,
       borderBottomWidth: 1,
       borderBottomColor: colors.border,
@@ -327,7 +329,7 @@ const RegisterFaculty: React.FC = () => {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Cargando facultades...</Text>
+          <Text style={styles.loadingText}>{t("registerFaculty.facultiesLoading")}</Text>
         </View>
       </SafeAreaView>
     )
@@ -341,7 +343,7 @@ const RegisterFaculty: React.FC = () => {
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()} activeOpacity={0.7}>
             <Ionicons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Gestión de Facultades</Text>
+          <Text style={styles.headerTitle}>{t("registerFaculty.managmentFaculties")}</Text>
         </View>
 
         <ScrollView
@@ -354,7 +356,7 @@ const RegisterFaculty: React.FC = () => {
             <View style={styles.sectionCard}>
               <Text style={styles.sectionTitle}>
                 <Ionicons name="school-outline" size={20} color={colors.primary} style={{ marginRight: 8 }} />
-                Facultades Registradas ({facultades.length})
+                {t("registerFaculty.facultiesRegustering")} ({facultades.length})
               </Text>
 
               <FlatList
@@ -374,7 +376,7 @@ const RegisterFaculty: React.FC = () => {
                 ListEmptyComponent={
                   <View style={styles.emptyContainer}>
                     <Ionicons name="school-outline" size={64} color={colors.secondaryText} />
-                    <Text style={styles.emptyText}>No hay facultades registradas</Text>
+                    <Text style={styles.emptyText}>{t("registerFaculty.noFacultiesRegistered")}</Text>
                   </View>
                 }
                 scrollEnabled={false}
@@ -387,13 +389,13 @@ const RegisterFaculty: React.FC = () => {
             <View style={styles.sectionCard}>
               <Text style={styles.sectionTitle}>
                 <Ionicons name="add-circle-outline" size={20} color={colors.primary} style={{ marginRight: 8 }} />
-                Registrar Nueva Facultad
+                {t("registerFaculty.registerNewFaculty")}
               </Text>
 
               <View style={styles.formContainer}>
                 {/* Nombre */}
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Nombre de la Facultad</Text>
+                  <Text style={styles.label}>{t("registerFaculty.facultyName")}</Text>
                   <TextInput
                     style={[styles.input, focusedField === "nombre" && styles.inputFocused]}
                     value={nombre}
@@ -408,7 +410,7 @@ const RegisterFaculty: React.FC = () => {
 
                 {/* Descripción */}
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Descripción</Text>
+                  <Text style={styles.label}>{t("registerFaculty.facultyDescription")}</Text>
                   <TextInput
                     style={[styles.input, styles.textArea, focusedField === "descripcion" && styles.inputFocused]}
                     value={descripcion}
@@ -425,7 +427,7 @@ const RegisterFaculty: React.FC = () => {
 
                 {/* Imagen */}
                 <View style={styles.inputContainer}>
-                  <Text style={styles.label}>Imagen de la Facultad</Text>
+                  <Text style={styles.label}>{t("registerFaculty.facultyImage")}</Text>
                   <TouchableOpacity
                     style={[styles.imagePicker, imagen && styles.imagePickerWithImage]}
                     onPress={pickImage}
@@ -435,7 +437,7 @@ const RegisterFaculty: React.FC = () => {
                     {imagen ? (
                       <>
                         <Image source={{ uri: imagen }} style={styles.selectedImage} />
-                        <Text style={styles.imagePickerText}>Toca para cambiar imagen</Text>
+                        <Text style={styles.imagePickerText}>{t("registerFaculty.changeImage")}</Text>
                       </>
                     ) : (
                       <>
@@ -445,7 +447,7 @@ const RegisterFaculty: React.FC = () => {
                           color={colors.secondaryText}
                           style={styles.imagePickerIcon}
                         />
-                        <Text style={styles.imagePickerText}>Toca para seleccionar imagen</Text>
+                        <Text style={styles.imagePickerText}>{t("registerFaculty.selectImage")}</Text>
                       </>
                     )}
                   </TouchableOpacity>
