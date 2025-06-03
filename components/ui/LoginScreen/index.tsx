@@ -143,7 +143,7 @@ const handleForgotPassword = async () => {
       alignItems: "center",
       paddingVertical: 20,
       paddingHorizontal: 20,
-      marginBottom: 20,
+      marginBottom: 10,
     },
     logoContainer: {
       alignItems: "center",
@@ -151,7 +151,7 @@ const handleForgotPassword = async () => {
     },
     logo: {
       width: 80,
-      height: 80,
+      height: 0,
       borderRadius: 20,
       marginBottom: 16,
     },

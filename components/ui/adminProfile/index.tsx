@@ -212,7 +212,7 @@ const AdminProfile: React.FC = () => {
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: 20,
-      paddingVertical: 16,
+      paddingVertical: 26,
       backgroundColor: colors.background,
       borderBottomWidth: 1,
       borderBottomColor: colors.border,
@@ -511,7 +511,7 @@ const AdminProfile: React.FC = () => {
         <Ionicons name="create-outline" size={24} color={colors.primary} style={styles.actionIcon} />
         <View style={styles.actionContent}>
           <Text style={styles.actionTitle}>{t("profile.edit")}</Text>
-          <Text style={styles.actionSubtitle}>Actualiza tu información personal</Text>
+          <Text style={styles.actionSubtitle}>{t("profile.edit2")}</Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color={colors.secondaryText} style={styles.actionArrow} />
       </TouchableOpacity>
@@ -525,8 +525,8 @@ const AdminProfile: React.FC = () => {
           >
             <Ionicons name="school-outline" size={24} color="#ffffff" style={styles.actionIcon} />
             <View style={styles.actionContent}>
-              <Text style={[styles.actionTitle, styles.actionTitleWhite]}>{t("profile.manageFaculty")}</Text>
-              <Text style={[styles.actionSubtitle, styles.actionSubtitleWhite]}>Gestiona facultades y carreras</Text>
+              <Text style={[styles.actionTitle, styles.actionTitleWhite]}>{t("profile.manageFaculties")}</Text>
+              <Text style={[styles.actionSubtitle, styles.actionSubtitleWhite]}>{t("profile.manageFacultiesText")}</Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color="rgba(255, 255, 255, 0.8)" style={styles.actionArrow} />
           </TouchableOpacity>
@@ -540,7 +540,7 @@ const AdminProfile: React.FC = () => {
             <View style={styles.actionContent}>
               <Text style={[styles.actionTitle, styles.actionTitleWhite]}>{t("profile.manageMaterials")}</Text>
               <Text style={[styles.actionSubtitle, styles.actionSubtitleWhite]}>
-                Administra materiales de estudio
+                {t("profile.manageMaterialsText")}
               </Text>
             </View>
             <Ionicons name="chevron-forward" size={20} color="rgba(255, 255, 255, 0.8)" style={styles.actionArrow} />
@@ -556,7 +556,6 @@ const AdminProfile: React.FC = () => {
         <Ionicons name="log-out-outline" size={24} color="#ffffff" style={styles.actionIcon} />
         <View style={styles.actionContent}>
           <Text style={[styles.actionTitle, styles.actionTitleWhite]}>{t("profile.logout")}</Text>
-          <Text style={[styles.actionSubtitle, styles.actionSubtitleWhite]}>Cerrar sesión actual</Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color="rgba(255, 255, 255, 0.8)" style={styles.actionArrow} />
       </TouchableOpacity>

@@ -52,7 +52,7 @@ const SettingsScreen: React.FC = () => {
           flexDirection: "row",
           alignItems: "center",
           paddingHorizontal: 20,
-          paddingVertical: 16,
+          paddingVertical: 26,
           backgroundColor: colors.background,
           borderBottomWidth: 1,
           borderBottomColor: colors.border,
@@ -253,7 +253,7 @@ const SettingsScreen: React.FC = () => {
       ],
     },
     {
-      title: "Personalización",
+      title: t("setting.personalization"),
       icon: "color-palette-outline",
       items: [
         {
@@ -308,8 +308,8 @@ const SettingsScreen: React.FC = () => {
             <View style={styles.welcomeIcon}>
               <Ionicons name="settings" size={30} color={colors.primary} />
             </View>
-            <Text style={styles.welcomeTitle}>Configuración</Text>
-            <Text style={styles.welcomeSubtitle}>Personaliza tu experiencia y gestiona tu cuenta desde aquí</Text>
+            <Text style={styles.welcomeTitle}>{t("setting.configuration")}</Text>
+            <Text style={styles.welcomeSubtitle}>{t("setting.configurationText")}</Text>
           </View>
           {settingSections.map((section, sectionIndex) => (
             <View key={sectionIndex} style={styles.section}>

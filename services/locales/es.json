@@ -12,7 +12,10 @@
       "light": "Claro",
       "dark": "Oscuro",
       "selectLanguage": "Seleccionar Idioma",
-      "selectTheme": "Seleccionar Tema"
+      "selectTheme": "Seleccionar Tema",
+      "personalization": "Personalización",
+      "configuration": "Configuración",
+      "configurationText": "Perzonaliza tu experiencia y gestiona tu cuenta desde aqui"
     },
     "editProfile": {
       "title": "Editar Perfil",
@@ -25,11 +28,14 @@
       "joinedDate": "Fecha de Unión",
       "joinedDatePlaceholder": "Ingrese la fecha de unión",
       "saveButton": "Guardar Cambios",
-      "toggleLanguage": "Cambiar idioma"
+      "toggleLanguage": "Cambiar idioma",
+      "editProfileText": "Actualiza tu información personal. Los cambios se guardarán en tu perfil.",
+      "info": "Información Personal"
     },
     "profile": {
       "title": "Perfil",
       "edit": "Editar Perfil",
+      "edit2": "Actualiza tu información personal",
       "manageDownloads": "Gestionar Descargas",
       "progress": "Progreso",
       "downloadHistory": "Historial de Descargas",
@@ -43,7 +49,19 @@
       "november": "noviembre",
       "Download": "Descargar",
       "male": "Masculino",
-      "female": "Femenino"
+      "female": "Femenino",
+      "name": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "registrationDate": "Fecha de Registro",
+      "gender": "Género",
+      "age": "Edad",
+      "logout": "Cerrar sesión",
+      "personalInfo": "Información Personal",
+      "manageFaculties": "Gestionar Facultades",
+      "manageFacultiesText": "Gestiona facultades y carreras",
+      "manageMaterials": "Gestionar Materiales",
+      "manageMaterialsText": "Gestiona materiales de estudio"
     },
     "Banner": {
       "Welcome": "Bienvenido",
@@ -51,6 +69,7 @@
     },
     "guide":{
       "title": "Guía",
+      "title2": "Pasos a seguir",
       "description0": "Sigue estos pasos para comenzar:",
       "description1": "Abre la aplicación e inicia sesión.",
       "description2": "Navega a través de las pestañas para explorar diferentes secciones como Facultades, Perfil y Configuración.",
@@ -62,7 +81,9 @@
     },
     "[fac]": {
       "Entrance exams for": "Exámenes de ingreso para ",
-      "entranceExamsFor": "Exámenes de ingreso para {{faculty}}"
+      "entranceExamsFor": "Exámenes de ingreso para {{faculty}}",
+      "materials": "Materiales de estudio organizados por año",
+      "noMaterials": "No hay materiales registrados para esta facultad."
     },
     "Change-password" :{
       "Change password": "Cambiar contraseña",
@@ -84,7 +105,19 @@
       "Biology": "Biología",
       "History": "Historia",
       "biology_exam_2022": "Examen de Biología - 2022",
-      "Search subject": "Buscar materia..."
+      "Search subject": "Buscar por nombre o facultad...",
+      "MaterialsLoading": "Cargando materiales...",
+      "title": "Materiales de Estudio",
+      "clear": "Limpiar búsqueda",
+      "refresh": "Refrescar lista",
+      "noMaterials": "No se pudo cargar el archivo",
+      "faileMaterial": "El archivo no se puede visualizar en la aplicación. Puedes intentar descargarlo para verlo en otra aplicación.",
+      "retry": "Reintentar",
+      "downloadFile": "Descargar archivo",
+      "fileLoading": "Cargando archivo...",
+      "seeMaterials": "Ver materiales",
+      "images": "Imágenes",
+      "allFiles": "Todos los archivos"
     },
     "notification": {
       "title": "Notificaciones",
@@ -113,7 +146,14 @@
       "guiaContext": "Lea la guia de la aplicación",
       "facMed": "Facultad de Medicina",
       "facDer": "Facultad de Derecho",
-      "facArq": "Facultad de Arquitectura"
+      "facArq": "Facultad de Arquitectura",
+      "recourses": "Recursos Académicos",
+      "loading": "Cargando facultades...",
+      "selectAFaculty": "Selecciona una facultad para explorar",
+      "noFaculties": "No hay facultades disponibles en este momento.",
+      "explore": "Explorar",
+      "see": "Ver",
+      "read": "Leer"
     },
     "FacultyMat": {
       "Download": "Descargar"
@@ -129,16 +169,40 @@
       "welcomeBack": "Bienvenido de nuevo",
       "welcomeMessage": "Estamos felices de verte de nuevo. Inicia sesión para continuar.",
       "rememberMe": "Recuérdame",
-      "noAccount": "¿No tienes una cuenta?"
+      "noAccount": "¿No tienes una cuenta?",
+      "loginWithGoogle": "Iniciar sesión con Google",
+      "error": "ERROR",
+      "allFieldsRequired": "Todos los campos son obligatorios"
     },
     "register": {
       "createAccount": "Crear una cuenta",
       "name": "Nombre",
       "apellido": "Apellidos",
       "email": "Correo electrónico",
+      "password": "Contraseña",
       "confirmPassword": "Confirmar contraseña",
       "signUp": "Registrarse",
-      "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión"
+      "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión",
+      "error": "ERROR",
+      "allFieldsRequired": "Todos los campos son obligatorios",
+      "success": "Cuenta creada exitosamente",
+      "accountCreated": "Tu cuenta ha sido creada exitosamente. Ahora puedes iniciar sesión.",
+      "emailInUse": "Este correo electrónico ya está en uso."
+    },
+    "common": {
+      "ok": "Aceptar"
+    },
+    "registerFaculty": {
+      "facultiesLoading": "Cargando facultades...",
+      "managmentFaculties": "Gestión de Facultades",
+      "facultiesRegustering": "Facultades Registradas",
+      "noFacultiesRegistered": "No hay facultades registradas",
+      "registerNewFaculty": "Registrar Nueva Facultad",
+      "facultyName": "Nombre de la Facultad",
+      "facultyDescription": "Descripción de la Facultad",
+      "facultyImage": "Imagen de la Facultad",
+      "changeImage": "Cambiar Imagen",
+      "selectImage": "Seleccionar Imagen"
     }
   }
   
