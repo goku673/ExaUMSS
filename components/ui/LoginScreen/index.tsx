@@ -366,13 +366,13 @@ const handleForgotPassword = async () => {
             </View>
           </View>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={dynamicStyles.forgotPasswordContainer}
             onPress={handleForgotPassword}
             disabled={loading}
           >
             <Text style={dynamicStyles.forgotPassword}>{t("login.forgotPassword")}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={[dynamicStyles.loginButton, loading && dynamicStyles.loginButtonDisabled]}

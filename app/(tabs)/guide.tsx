@@ -214,7 +214,7 @@ export default function GuideScreen() {
               <Text style={styles.videoTitle}>{t("guide.Help video")}</Text>
             </View>
             <View style={styles.videoContainer}>
-              <YoutubePlayer height={220} play={false} videoId="HJS39OsYEN8" />
+              <YoutubePlayer height={220} play={false} videoId="GP7nj2UWLMU" />
             </View>
           </View>
         </View>

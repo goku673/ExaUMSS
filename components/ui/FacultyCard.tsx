@@ -9,6 +9,8 @@ import {
   TextStyle,
   ViewStyle
 } from "react-native";
+import { useTheme } from "@/components/ui/ThemeContext";
+import { getThemeColors } from "@/components/theme";
 
 interface FacultyCardProps {
   title: string;
@@ -25,6 +27,8 @@ const FacultyCard: React.FC<FacultyCardProps> = ({
   titleStyle,
   containerStyle
 }) => {
+  const { theme } = useTheme();
+  const colors = getThemeColors(theme);
   return (
     <TouchableOpacity 
       style={[styles.container, containerStyle]} 
@@ -40,7 +44,7 @@ const styles = StyleSheet.create({
   container: {
     width: "45%",
     padding: 16,
-    backgroundColor: "#FFF",
+    backgroundColor: `{colors.background}`,
     borderRadius: 8,
     alignItems: "center",
     marginBottom: 18,

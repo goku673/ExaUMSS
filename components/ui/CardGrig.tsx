@@ -29,6 +29,7 @@ const CardGrid: React.FC = () => {
   const { theme } = useTheme()
   const colors = getThemeColors(theme)
 
+
   // Animaciones
   const slideAnim = useState(new Animated.Value(screenHeight))[0]
   const opacityAnim = useState(new Animated.Value(0))[0]
@@ -80,12 +81,13 @@ const CardGrid: React.FC = () => {
       setVisible(true)
       console.log(`Card clicked: ${title}`)
     } else if (title === t("cardGrig.reciente")) {
-      router.push("/(tabs)/guide")
+      
       console.log(`Card clicked: ${title}`)
     } 
       else {
       router.push("/(tabs)/guide")
       console.log(`Card clicked: ${title}`)
+      router.push("/(tabs)/guide")
     }
   }
 
@@ -326,13 +328,7 @@ const CardGrid: React.FC = () => {
       color: "#3b82f6",
       action: t("cardGrig.explore"),
     },
-    {
-      title: t("cardGrig.reciente"),
-      description: t("cardGrig.recienteContext"),
-      icon: "time-outline",
-      color: "#10b981",
-      action: t("cardGrig.see"),
-    },
+    
     {
       title: t("cardGrig.guia"),
       description: t("cardGrig.guiaContext"),
